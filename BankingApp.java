@@ -1,8 +1,7 @@
-import java.util.Scanner;
 import java.io.*;
 import java.util.*;
-// Class
-public class BankingSelf {
+
+public class BankingApp {
   static Scanner scanner = new Scanner(System.in);
 
   // Global Variables
@@ -13,10 +12,6 @@ public class BankingSelf {
   static final int idIndex = 0, pinIndex = 1, balanceIndex = 2;
   static final int nameIndex = 1; // for account name
 
-  //to store the account data permanently  
-  static FileOutputSream dataFile = new FileOutputSream("accountsData.txt", true);
-  static PrintStream fileWriter = new PrintStream(dataFile);
-  static Scanner fileReader = new Scanner(dataFile); 
 
 
   // Main Method
@@ -234,10 +229,14 @@ public class BankingSelf {
 
   public static void loadSavedData()
   {
-    int i = 0;
-    while(fileReader.hasNext())
+    //loading saved data into an array
+    try
     {
-      try{
+      int i = 0;
+      FileInputStream dataFile = new FileInputStream("accountsData.txt");
+      Scanner fileReader = new Scanner(dataFile);
+      while(fileReader.hasNext())
+      {
         accountCredentials[i][idIndex] = fileReader.nextInt();
         accountCredentials[i][pinIndex] = fileReader.nextInt();
         accountCredentials[i][balanceIndex] = fileReader.nextInt();
@@ -245,13 +244,24 @@ public class BankingSelf {
         fileReader.nextInt(); //clearing the buffer created by nextInt()
         
         accountNames[i][nameIndex] = fileReader.nextLine.trim();
-        i++;
-      } 
-      catch (Exception e)
-      {
-        System.out.println("An error Occurred: " +e.getMessage());
-        break;
+        i++; 
       }
+      dataFile.close();
     }
+    catch (Exception e)
+    {
+      System.out.println("An error Occurred: " +e.getMessage());
+      return;
+    }
+
+    totalAccounts = i;
+    
+    
+
+  } // Load Saved Data Method Closed
+
+  static void saveData()
+  {
+    
   }
-}
+}// BankingApp Class Closed
