@@ -262,6 +262,24 @@ public class BankingApp {
 
   static void saveData()
   {
-    
-  }
+    try {
+      FileOutputStream datafile = new FileOutputStream("accountsData.txt");
+      PrintWriter fileWriter = new PrintWriter(datafile);    
+      //cleared the file before writing data, and put the updated data again in the file.
+      for(int i = 0; i<totalAccounts; i++)
+      {
+        fileWriter.print(accountCredentials[i][idIndex] + " ");
+        fileWriter.print(accountCredentials[i][pinIndex] + " ");
+        fileWriter.print(accountCredentials[i][balanceIndex] + " ");
+        fileWriter.println(accountNames[i][nameIndex]);
+      }
+
+    } 
+    catch (Exception e) {
+      System.out.println("An error Occurred: " +e.getMessage());
+      return;
+    }
+  }//end of saveData method
+
+  
 }// BankingApp Class Closed
