@@ -18,9 +18,6 @@ public class BankingApp {
   public static void main(String[] args) {
 
     loadSavedData();
-    
-
-
     int chosenOption;
 
     //TODO: Put this in a method named showmain  menu
@@ -28,13 +25,12 @@ public class BankingApp {
     // Loop for the choice in the first menu
     do {
       System.out.println("╔═════════════════════════════════════════════╗");
-      System.out.println("║           BANKING MANAGEMENT SYSTEM         ║");
+      System.out.println("║       BANKING MANAGEMENT SYSTEM             ║");
       System.out.println("╚═════════════════════════════════════════════╝");
       System.out.println(
           "\n"
               + "1. Create New Account\n"
               + "2. Log Into Account\n"
-              + "3. Recover Account\n"
               + "4. Exit\n"
               + "Choose an option: ");
 
@@ -48,11 +44,6 @@ public class BankingApp {
           System.out.print("Enter your Account ID");
           int userID = scanner.nextInt();
           login(userID);
-          break;
-        case 3:
-          System.out.print("Enter your Account ID: ");
-          int userID = scanner.nextInt();
-          recoverAccount(userID);
           break;
         case 4:
           System.out.println("Goodbye!");
