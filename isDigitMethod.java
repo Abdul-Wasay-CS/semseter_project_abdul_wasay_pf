@@ -7,16 +7,23 @@ public class checkingDigit
       Scanner input = new Scanner(System.in);
 
       String s = "48002";
-      
-      char currentChar;
-      boolean isdigit = true;
-      for(int i =0; i<s.lenght(); i++)
-      {
-        currentChar = s.charAt(i);
-        if(!Character.isDigit(currentChar))
-          isDigit = false;
-      }
 
-      return isdigit;
+
+	      
+
+    }
+    public static boolean isDigit(String userPin)
+    {
+    	char currentChar;
+      	boolean isdigit = true;
+      	for(int i =0; i<userPin.lenght(); i++)
+	      {
+		currentChar = userPin.charAt(i);
+		if(!Character.isDigit(currentChar))
+		  isDigit = false;
+	      }
+
+	return isdigit;
     }
 }
+
