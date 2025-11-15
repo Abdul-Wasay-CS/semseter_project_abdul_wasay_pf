@@ -6,9 +6,23 @@ public class BankingApp {
   static Scanner scanner = new Scanner(System.in);
   static Random random = new Random();
 
-  // Global Variables
-  // The first index of the accountCredentials is reserved for account Ids.
-  // The second index for PIN, and the third for the Account Balance.
+  //colors for console output using ANSI escape codes
+
+  // Reset code
+  public static final String RESET = "\u001B[0m";
+  // Text Styles
+  public static final String BOLD = "\u001B[1m";
+  // Text Colors (Foreground)
+  public static final String RED = "\u001B[31m";
+  public static final String GREEN = "\u001B[32m";
+  public static final String YELLOW = "\u001B[33m";
+  public static final String BLUE = "\u001B[34m";
+
+  // Background Colors
+  public static final String REDBACKGROUND = "\u001B[41m";
+  public static final String BLUEBACKGROUND = "\u001B[44m";
+
+  //Global Arrays, The first index of the accountCredentials is reserved for account Ids. The second index for PIN, and the third for the Account Balance.
   static boolean[] accountExists = new boolean[100];
   static int[][] accountCredentials = new int[100][4];
   static String[] accountNames = new String[100];
@@ -24,21 +38,23 @@ public class BankingApp {
 
     // Load Previously Saved Data
     loadSavedData();
-
+    
+    
     int chosenOption = 0;
 
     // Loop for the choice in the first menu
     do {
-      System.out.println("╔═════════════════════════════════════════════╗");
-      System.out.println("║           BANKING MANAGEMENT SYSTEM         ║");
-      System.out.println("╚═════════════════════════════════════════════╝");
-      System.out.print(
-          "\n"
-              + "1. Create New Account\n"
-              + "2. Log Into Account\n"
-              + "3. Recover Account\n"
-              + "4. Exit\n"
-              + "Choose an option: ");
+      System.out.println(BOLD+RED+"╔═════════════════════════════════════════════╗"+RESET);
+      System.out.println(BOLD+RED+"║           BANKING MANAGEMENT SYSTEM         ║"+RESET);
+      System.out.println(BOLD+RED+"╚═════════════════════════════════════════════╝"+RESET);
+      System.out.println(
+                BOLD+BLUE+"╔═════════════════════════════════════════════╗\n"+RESET
+              + BOLD+BLUE+"║"+RESET+"    "+YELLOW+"1. Create New Account "+RESET+"                   "+BLUE+"║"+RESET+"\n"
+              + BOLD+BLUE+"║"+RESET+"    "+YELLOW+"2. Log Into Account"+RESET+"                      "+BLUE+"║"+RESET+"\n"
+              + BOLD+BLUE+"║"+RESET+"    "+YELLOW+"3. Recover Account "+RESET+"                      "+BLUE+"║"+RESET+"\n"
+              + BOLD+BLUE+"║"+RESET+"    "+YELLOW+"4. Exit            "+RESET+"                      "+BLUE+"║"+RESET+"\n"
+              + BOLD+BLUE+"╚═════════════════════════════════════════════╝"+RESET+"\n"
+              + BOLD+GREEN+"Choose an option: "+RESET);
 
       // Choice Switch
       chosenOption = scanner.nextInt();
@@ -65,10 +81,10 @@ public class BankingApp {
         default:
           System.out.println("Please try again! Choose a valid option.");
       } // Close the choice switch
-    } while (true); // Close the first menu loop
-
     // Save Changes in the Data
     saveData();
+    } while (true); // Close the first menu loop
+
   } // Main Method Closed
 
   // Create Account Method
@@ -388,17 +404,18 @@ public class BankingApp {
         accountNames[i] = fileReader.nextLine().trim();
         i++;
       }
+      totalAccounts = i;
       dataFile.close();
     } catch (Exception e) {
       System.out.println("An error Occurred: " + e.getMessage());
       return;
     }
 
-    totalAccounts = i;
+    
   } // Load Saved Data Method Closed
 
   // Save New Data
-  static void saveData() {
+  public static void saveData() {
     try {
       FileOutputStream datafile = new FileOutputStream("accountsData.txt");
       PrintWriter fileWriter = new PrintWriter(datafile);
@@ -413,7 +430,7 @@ public class BankingApp {
 
     } catch (Exception e) {
       System.out.println("An error Occurred: " + e.getMessage());
-      return;
     }
   } // end of saveData method
+
 } // BankingApp Class Closed
