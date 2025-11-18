@@ -37,15 +37,13 @@ public class BankingApp {
   static boolean[] accountExists = new boolean[100];
   static int[][] accountCredentials = new int[100][4];
   static String[] accountNames = new String[100];
-  static String[] securityAnswers = new String[100];
-  static String securityQuestion =
-      "What's your favorite car and in what color? (Format: <Car color> <Car brand>)";
   static int totalAccounts = 0;
   static int userID;
   static final int IDINDEX = 0, PININDEX = 1, BALANCEINDEX = 2, TRANSFERINDEX = 3;
 
   // Main Method
-  public static void main(String[] args) {
+  public static void main(String[] args) 
+  {
 
     // Load Previously Saved Data
     loadSavedData();
@@ -90,8 +88,7 @@ public class BankingApp {
         case 4:
           System.out.println("Goodbye!");
           saveData();
-          System.exit(0);
-          break;
+          return;
         default:
           System.out.println("Please try again! Choose a valid option.");
       } // Close the choice switch
@@ -107,10 +104,12 @@ public class BankingApp {
 
     scanner.nextLine();
     // Account Name
+
     System.out.print("Enter Account Holder Name: ");
     accountNames[totalAccounts] = scanner.nextLine();
 
     // Account Passwords
+
     boolean matchingPINs = false;
     int finalPIN = 0;
     String userPINs = "", userPINsConfirm = "";
@@ -145,16 +144,12 @@ public class BankingApp {
     } while (matchingPINs == false); // Close password loop
 
     // Entry of the new account into the System
+
     accountCredentials[indexNumber][IDINDEX] = accountIDToBeAssigned();
     accountCredentials[indexNumber][PININDEX] = finalPIN;
     accountCredentials[indexNumber][BALANCEINDEX] = 0;
     accountCredentials[indexNumber][TRANSFERINDEX] =
         random.nextInt(1000000, 100000000); // Any random number (10000000 not included)
-
-    // Security Question
-    System.out.println("\nAnswer the following security question, in case you forget your PIN in the future:\n"+ securityQuestion);
-    securityAnswers[indexNumber] = scanner.nextLine();
-
     accountExists[indexNumber] = true;
     System.out.println("Account Successfully Created!");
 
@@ -378,7 +373,6 @@ public class BankingApp {
     accountCredentials[indexNumber][PININDEX] = 0;
     accountCredentials[indexNumber][BALANCEINDEX] = 0;
     accountCredentials[indexNumber][TRANSFERINDEX] = 0;
-    securityAnswers[indexNumber] = "";
     accountExists[indexNumber] = false;
   } // Delete Account Method Closed
 
@@ -397,57 +391,57 @@ public class BankingApp {
       System.out.println("Invalid Account.");
       return;
     }
-
-    scanner.nextLine();
-    System.out.println(securityQuestion);
-    String answer = scanner.nextLine();
-
-    // Check if the security question's answer is correct
-    if (answer.equalsIgnoreCase(securityAnswers[indexNumber])) {
-      System.out.println("Your PIN is: " + accountCredentials[indexNumber][PININDEX]);
-    } else {
-      System.out.println("Incorrect answer.");
-    }
+    //TODO: Add security number verification here in the future.
   } // Recover Account Method Closed
+
 
   // File Management Load Saved Data
   public static void loadSavedData() {
+    int i =0;
     totalAccounts = 0;
     // loading saved data into an array
     try {
-      int i = 0;
-      FileInputStream dataFile = new FileInputStream("accountsData.txt");
-      Scanner fileReader = new Scanner(dataFile);
-      while (fileReader.hasNext()) {
-        accountCredentials[i][IDINDEX] = fileReader.nextInt();
-        accountCredentials[i][PININDEX] = fileReader.nextInt();
-        accountCredentials[i][BALANCEINDEX] = fileReader.nextInt();
-        accountCredentials[i][TRANSFERINDEX] = fileReader.nextInt();
-        accountExists[i] = fileReader.nextBoolean();
-        accountNames[i] = fileReader.nextLine().trim();
-        i++;
+        FileInputStream dataFile = new FileInputStream("accountsData.csv");
+        Scanner fileReader = new Scanner(dataFile);
+        while (fileReader.hasNextLine()) {
+            //read line by line
+            String line = fileReader.nextLine();
+            //split the line into parts by comma
+            String[] parts = line.split(",");
+            //assign the parts to respective arrays
+            accountCredentials[i][IDINDEX] = Integer.parseInt(parts[0].trim());
+            accountCredentials[i][PININDEX] = Integer.parseInt(parts[1].trim());
+            accountCredentials[i][BALANCEINDEX] = Integer.parseInt(parts[2].trim());
+            accountCredentials[i][TRANSFERINDEX] = Integer.parseInt(parts[3].trim());
+            accountExists[i] = Boolean.parseBoolean(parts[4].trim());
+            accountNames[i] = parts[5].trim();
+            i++;
+        }
+      //counting the totalaccounts
+      for(int j=0; j<accountExists.length; j++)
+      {
+        if(accountExists[j])
+          totalAccounts++;
       }
-      totalAccounts = i;
-      dataFile.close();
+      fileReader.close();
     } catch (Exception e) {
-      System.out.println("An error Occurred: " + e.getMessage());
+      System.out.println("An error Occurred: " + e);
     }
-
     
   } // Load Saved Data Method Closed
 
   // Save New Data
   public static void saveData() {
     try {
-      FileOutputStream datafile = new FileOutputStream("accountsData.txt",false);
+      FileOutputStream datafile = new FileOutputStream("accountsData.csv",false);
       PrintWriter fileWriter = new PrintWriter(datafile);
       // cleared the file before writing data, and put the updated data again in the file.
       for (int i = 0; i < totalAccounts; i++) {
-        fileWriter.println(accountCredentials[i][IDINDEX]);
-        fileWriter.println(accountCredentials[i][PININDEX]);
-        fileWriter.println(accountCredentials[i][BALANCEINDEX]);
-        fileWriter.println(accountCredentials[i][TRANSFERINDEX]);
-        fileWriter.println(accountExists[i]);
+        fileWriter.print(accountCredentials[i][IDINDEX] + ",");
+        fileWriter.print(accountCredentials[i][PININDEX]+",");
+        fileWriter.print(accountCredentials[i][BALANCEINDEX]+",");
+        fileWriter.print(accountCredentials[i][TRANSFERINDEX]+",");
+        fileWriter.print(accountExists[i]+",");
         fileWriter.println(accountNames[i]);
       }
       fileWriter.close();
@@ -456,5 +450,4 @@ public class BankingApp {
       System.out.println("An error Occurred: " + e.getMessage());
     }
   } // end of saveData method
-
-} // BankingApp Class Closed
+} //class
