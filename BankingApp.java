@@ -159,13 +159,12 @@ public class BankingApp {
     } while (matchingPINs == false); // Close password loop
 
     // Entry of the new account into the System
-
-    accountCredentials[indexNumber][IDINDEX] = accountIDToBeAssigned();
-    accountCredentials[indexNumber][PININDEX] = finalPIN;
-    accountCredentials[indexNumber][BALANCEINDEX] = 0;
-    accountCredentials[indexNumber][TRANSFERINDEX] =
+    accountCredentials.add(indexNumber).add(IDINDEX) = accountIDToBeAssigned();     //creates the new row and adds the new column
+    accountCredentials.get(indexNumber).add(PININDEX) = finalPIN;
+    accountCredentials.get(indexNumber).add(BALANCEINDEX) = 0;
+    accountCredentials.get(indexNumber).add(TRANSFERINDEX) =
         random.nextInt(1000000, 100000000); // Any random number (10000000 not included)
-    accountExists[indexNumber] = true;
+    accountExists.set(indexNumber) = true;
     System.out.println("Account Successfully Created!");
     if(indexNumber == totalAccounts) totalAccounts++;
 
@@ -196,12 +195,14 @@ public class BankingApp {
   }
 
   // Logging into the account, Method
-  public static void login(int accountID) {
+  public static void login(int accountID) 
+  {
     // Index Number
     int indexNumber = accountID - 101;
     System.out.print(accountExists[indexNumber]);
 
-    if (indexNumber < 0 || indexNumber >= accountExists.length || !accountExists[indexNumber]) {
+    if (indexNumber < 0 || indexNumber >= accountExists.length || !accountExists[indexNumber])
+    {
       System.out.println("Invalid Account.");
       return;
     }
@@ -212,12 +213,14 @@ public class BankingApp {
     scanner.nextLine();
 
     // Check password authenticity
-    if (userPIN != accountCredentials[indexNumber][PININDEX]) {
+    if (userPIN != accountCredentials[indexNumber][PININDEX]) 
+    {
       boolean PINAuthenticity = false;
       int triesRemaining = 3;
 
       // Incorrect Password Loop
-      while (PINAuthenticity == false && triesRemaining > 0) {
+      while (PINAuthenticity == false && triesRemaining > 0)
+       {
         System.out.println("Incorrect PIN! " + triesRemaining + " remaining.");
         System.out.print("Enter your PIN again: ");
         userPIN = scanner.nextInt();
@@ -225,12 +228,13 @@ public class BankingApp {
         triesRemaining--;
 
         // Check PIN Authenticity again
-        if (userPIN == accountCredentials[indexNumber][PININDEX]) {
+        if (userPIN == accountCredentials[indexNumber][PININDEX]) 
+        {
           PINAuthenticity = true;
         }
       }
 
-      // Account Blocked
+      //password fail more than three times.
       if (PINAuthenticity != true) {
         System.out.println("Incorrect PIN limit reached!\nAccount deleted.");
         deleteAccount(indexNumber);
@@ -243,24 +247,27 @@ public class BankingApp {
   }
 
   // Login Menu after Successfully Logging In, Method
-  public static void loginMenu(int indexNumber) {
+  public static void loginMenu(int indexNumber) 
+  {
     // Variables Declaration
     int chosenOption = 0;
 
     // Options Selection
     do {
-      System.out.println(
-              "\n╔═════════════════════════════════════════════════════╗\n"
-              + "║     1. Check Balance                                ║\n"
-              + "║     2. Deposit Money                                ║\n"
-              + "║     3. Withdraw Money                               ║\n"
-              + "║     4. Transfer Money                               ║\n"
-              + "║     5. View Account Details                         ║\n"
-              + "║     6. Delete Account                               ║\n"
-              + "║     7. Exit                                         ║\n"
-              + "║     Choose an option:                               ║\n"
-              + "║                                                     ║\n"
-              + "╚═════════════════════════════════════════════════════╝\n");
+      //looks wierd here, but prints out in perfect semmetry
+       System.out.println(
+              BRIGHTCYAN+"\n               ╔═══════════════════════════════════════════════════════╗\n"+RESET
+              +BRIGHTCYAN+  "               ║                                                       ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       1. Check Balance                                ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       2. Deposit Money                                ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       3. Withdraw Money                               ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       4. Transfer Money                               ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       5. View Account Details                         ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BOLD+BRIGHTRED+"       6. Delete Account                               "+RESET+BRIGHTCYAN+"║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BOLD+GREEN+"       7. Exit                                         "+RESET+BRIGHTCYAN+"║\n"+RESET
+              +BRIGHTCYAN+  "               ║       Choose an option:                               ║\n"+RESET
+              +BRIGHTCYAN+  "               ║                                                       ║\n"+RESET
+              +BRIGHTCYAN+  "               ╚═══════════════════════════════════════════════════════╝\n"+RESET);
       chosenOption = scanner.nextInt();
       scanner.nextLine();
       switch (chosenOption) {
@@ -293,7 +300,7 @@ public class BankingApp {
 
   // Check Balance Method
   public static void checkBalance(int indexNumber) {
-    System.out.println("Balance:" + accountCredentials[indexNumber][BALANCEINDEX]);
+    System.out.println("Balance:" + accountCredentials.get(indexNumber).get(BALANCEINDEX));
   } // Check Balance Method Closed
 
   // Deposit Money Method
@@ -312,7 +319,7 @@ public class BankingApp {
     System.out.println();
 
     // Balance Updated
-    accountCredentials[indexNumber][BALANCEINDEX] += moneyToDeposit;
+    accountCredentials.get(indexNumber).get(BALANCEINDEX) += moneyToDeposit;
   } // Deposit Money Method Closed
 
   // Withdraw Money Method
@@ -328,7 +335,7 @@ public class BankingApp {
       return;
     }
 
-    if(moneyToWithdraw > accountCredentials[indexNumber][BALANCEINDEX])
+    if(moneyToWithdraw > accountCredentials.get(indexNumber).get(BALANCEINDEX))
     {
       System.out.print("Insufficient Balance.");
     }
@@ -336,7 +343,7 @@ public class BankingApp {
     System.out.println();
 
     // Balance Updated
-    accountCredentials[indexNumber][BALANCEINDEX] -= moneyToWithdraw;
+    accountCredentials.get(indexNumber).get(BALANCEINDEX) -= moneyToWithdraw;
   } // Withdraw Money Method Closed
 
   // Transfer Money Method
@@ -351,11 +358,11 @@ public class BankingApp {
     int moneyToTransfer = scanner.nextInt();
     scanner.nextLine();
     if (receiverIndex != -1) {
-      accountCredentials[receiverIndex][BALANCEINDEX] += moneyToTransfer;
-      accountCredentials[indexNumber][BALANCEINDEX] -= moneyToTransfer;
+      accountCredentials.get(receiverIndex).get(BALANCEINDEX) += moneyToTransfer;
+      accountCredentials.get(indexNumber).get(BALANCEINDEX) -= moneyToTransfer;
       System.out.println(
           "Money Transfered to Mr/Mrs."
-              + accountNames[receiverIndex]
+              + accountNames.get(receiverIndex)
               + ": "
               + moneyToTransfer
               + "€");
@@ -363,13 +370,15 @@ public class BankingApp {
   }
 
   // Find the Index Number from Transfer ID Method
-  public static int findReceiverIDIndex(int transferID) {
+  public static int findReceiverIDIndex(int transferID) 
+  {
     int receiverIndex = -1;
     boolean transferIDFound = false;
 
     // For-Loop
     for (int i = 0; i < accountCredentials.length; i++) {
-      if (accountCredentials[i][TRANSFERINDEX] == transferID) {
+      if (accountCredentials.get(i).get(TRANSFERINDEX) == transferID) 
+      {
         receiverIndex = i;
         transferIDFound = true;
         break;
@@ -377,7 +386,8 @@ public class BankingApp {
     } // For-Loop Closed
 
     // Check the existance of Receiver's Index
-    if (!transferIDFound) {
+    if (!transferIDFound) 
+    {
       System.out.println("No such account found! Please enter a valid Transfer ID.");
     }
 
@@ -385,27 +395,32 @@ public class BankingApp {
   } // Find Receiver ID Index closed
 
   // View Account Details Method
-  public static void viewAccountDetails(int indexNumber) {
+  public static void viewAccountDetails(int indexNumber)
+  {
     System.out.println(
         "\nACCOUNT DETAILS:\nAccount ID: "
-            + accountCredentials[indexNumber][IDINDEX]
+            + accountCredentials.get(indexNumber).get(IDINDEX)
             + "\nAccount Holder Name: "
-            + accountNames[indexNumber]
+            + accountNames.get(indexNumber)
             + "\nAccount Balance: "
-            + accountCredentials[indexNumber][BALANCEINDEX]
+            + accountCredentials.get(indexNumber).get(BALANCEINDEX)
             + "\nTransfer ID: "
-            + accountCredentials[indexNumber][TRANSFERINDEX]);
+            + accountCredentials.get(indexNumber).get(TRANSFERINDEX));
   }
 
   // Delete Account Method
-  public static void deleteAccount(int indexNumber) {
+  public static void deleteAccount(int indexNumber)
+  {
+    //TODO: Before nulliing values, save them in a File Named "Deleted Account Details."    
     System.out.println("\nACCOUNT DELETION:\nAccount deleted.");
-    accountNames[indexNumber] = "";
-    accountCredentials[indexNumber][IDINDEX] = 0;
-    accountCredentials[indexNumber][PININDEX] = 0;
-    accountCredentials[indexNumber][BALANCEINDEX] = 0;
-    accountCredentials[indexNumber][TRANSFERINDEX] = 0;
-    accountExists[indexNumber] = false;
+    accountNames.get(indexNumber) = "";
+    accountCredentials.get(indexNumber).get(IDINDEX) = 0;
+    accountCredentials.get(indexNumber).get(PININDEX) = 0;
+    accountCredentials.get(indexNumber).get(BALANCEINDEX) = 0;
+    accountCredentials.get(indexNumber).get(TRANSFERINDEX) = 0;
+    accountExists.get(indexNumber) = false;
+
+
   } // Delete Account Method Closed
 
   // Recover Account Method
@@ -436,17 +451,15 @@ public class BankingApp {
         FileInputStream dataFile = new FileInputStream("accountsData.csv");
         Scanner fileReader = new Scanner(dataFile);
         while (fileReader.hasNextLine()) {
-            //read line by line
             String line = fileReader.nextLine();
-            //split the line into parts by comma
             String[] parts = line.split(",");
             //assign the parts to respective arrays
-            accountCredentials[i][IDINDEX] = Integer.parseInt(parts[0].trim());
-            accountCredentials[i][PININDEX] = Integer.parseInt(parts[1].trim());
-            accountCredentials[i][BALANCEINDEX] = Integer.parseInt(parts[2].trim());
-            accountCredentials[i][TRANSFERINDEX] = Integer.parseInt(parts[3].trim());
-            accountExists[i] = Boolean.parseBoolean(parts[4].trim());
-            accountNames[i] = parts[5].trim();
+            accountCredentials.get(i).get(IDINDEX) = Integer.parseInt(parts[0].trim());
+            accountCredentials.get(i).get(PININDEX) = Integer.parseInt(parts[1].trim());
+            accountCredentials.get(i).get(BALANCEINDEX) = Integer.parseInt(parts[2].trim());
+            accountCredentials.get(i).get(TRANSFERINDEX) = Integer.parseInt(parts[3].trim());
+            accountExists.get(i) = Boolean.parseBoolean(parts[4].trim());
+            accountNames.get(i) = parts[5].trim();
             i++;
         }
       //counting the totalaccounts
@@ -456,8 +469,9 @@ public class BankingApp {
           totalAccounts++;
       }
       fileReader.close();
-    } catch (Exception e) {
-      System.out.println("An error Occurred: " + e);
+    } catch (IOException e) {
+      System.out.println("Could not load data properly , following error occured," + e.toString());
+
     }
     
   } // Load Saved Data Method Closed
@@ -468,13 +482,13 @@ public class BankingApp {
       FileOutputStream datafile = new FileOutputStream("accountsData.csv",false);
       PrintWriter fileWriter = new PrintWriter(datafile);
       // cleared the file before writing data, and put the updated data again in the file.
-      for (int i = 0; i < totalAccounts; i++) {
-        fileWriter.print(accountCredentials[i][IDINDEX] + ",");
-        fileWriter.print(accountCredentials[i][PININDEX]+",");
-        fileWriter.print(accountCredentials[i][BALANCEINDEX]+",");
-        fileWriter.print(accountCredentials[i][TRANSFERINDEX]+",");
-        fileWriter.print(accountExists[i]+",");
-        fileWriter.println(accountNames[i]);
+      for (int i = 0; i < accountCredentials.length; i++) {
+        fileWriter.print(accountCredentials.get(i).get(IDINDEX) + ",");
+        fileWriter.print(accountCredentials.get(i).get(PININDEX)+",");
+        fileWriter.print(accountCredentials.get(i).get(BALANCEINDEX)+",");
+        fileWriter.print(accountCredentials.get(i).get(TRANSFERINDEX)+",");
+        fileWriter.print(accountExists.get(i)=+",");
+        fileWriter.println(accountNames.get(i));
       }
       fileWriter.close();
 

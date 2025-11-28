@@ -56,18 +56,19 @@ public class formattingLoginScreen
 
     int chosenOption = 0;
 
-    // Loop for the choice in the first menu
-      System.out.println(
-                BOLD+YELLOW+"     ╔═════════════════════════════════════════════════════════════════════════════════╗\n"+RESET
-              + BOLD+YELLOW+"     ║"+RESET+"   Welcome To the System, Please Select what do you want to do:                  ║\n"
-              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"1. Create New Account "+RESET+"                                                       "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"2. Log Into Account"+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"3. Recover Account "+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"     ║"+RESET+"    "+RED+"4. Exit            "+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"     ╚═════════════════════════════════════════════════════════════════════════════════╝"+RESET+"\n"
-              + "\n"+BRIGHTCYAN+"   Choose an option: "+RESET);
-
+ System.out.println(
+              BRIGHTCYAN+"\n               ╔═══════════════════════════════════════════════════════╗\n"+RESET
+              +BRIGHTCYAN+  "               ║                                                       ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       1. Check Balance                                ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       2. Deposit Money                                ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       3. Withdraw Money                               ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       4. Transfer Money                               ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       5. View Account Details                         ║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BOLD+BRIGHTRED+"       6. Delete Account                               "+RESET+BRIGHTCYAN+"║\n"+RESET
+              +BRIGHTCYAN+  "               ║"+BOLD+GREEN+"       7. Exit                                         "+RESET+BRIGHTCYAN+"║\n"+RESET
+              +BRIGHTCYAN+  "               ║       Choose an option:                               ║\n"+RESET
+              +BRIGHTCYAN+  "               ║                                                       ║\n"+RESET
+              +BRIGHTCYAN+  "               ╚═══════════════════════════════════════════════════════╝\n"+RESET);
       // Choice Switch
-      chosenOption = scanner.nextInt();
   }
 }
