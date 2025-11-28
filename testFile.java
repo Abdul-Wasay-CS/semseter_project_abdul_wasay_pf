@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 // Note: This test suite uses static members and directly modifies the internal state 
 // of the BankingApp class for testing purposes.
 
-public class BankingAppTest {
+public class testFile {
 
     // Indices for easy reference, matching the constants in BankingApp
     private final int TEST_INDEX = 0;

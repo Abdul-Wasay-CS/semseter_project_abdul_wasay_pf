@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.Random;
-import java.util.Scanner;
-
+import java.util.*;
 public class BankingApp {
   static Scanner scanner = new Scanner(System.in);
   static Random random = new Random();
@@ -34,23 +32,43 @@ public class BankingApp {
   public static final String UNDERLINE = "\u001B[4m";
 
   //Global Arrays, The first index of the accountCredentials is reserved for account Ids. The second index for PIN, and the third for the Account Balance.
-  static boolean[] accountExists = new boolean[100];
-  static int[][] accountCredentials = new int[100][4];
-  static String[] accountNames = new String[100];
+  static ArrayList <Boolean> accountExists = new ArrayList<>();
+  static ArrayList <ArrayList <Integer>> accountCredentials = new ArrayList<>();
+  static ArrayList <String> accountNames = new ArrayList<>();
   static int totalAccounts = 0;
   static int userID;
   static final int IDINDEX = 0, PININDEX = 1, BALANCEINDEX = 2, TRANSFERINDEX = 3;
 
-  // Main Method
-  public static void main(String[] args) 
+
+
+  // Main Method, interruped Exception thrown due to use of thread.sleep()
+  public static void main(String[] args) throws InterruptedException 
   {
 
     // Load Previously Saved Data
     loadSavedData();
-    System.out.println(BOLD+BLUE+"╔═════════════════════════════════════════════╗"+RESET);
-    System.out.println(BOLD+BLUE+"║"+RESET+"          "+BLUE+"BANKING MANAGEMENT SYSTEM"+RESET+"          "+BOLD+BLUE+"║"+RESET);
-    System.out.println(BOLD+BLUE+"╚═════════════════════════════════════════════╝"+RESET);    
-    
+    for(int i=1; i<=5; i++)
+    {
+      final int DELAYTIME = 60;
+      System.out.print("\rLoading accuont id.....          ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account pin.....         ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account balance......    ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account transfer id......");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account names......      ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\r                                 ");   // to clear out the last leftover message
+    }
+    System.out.println();
+    System.out.println(BOLD+BLUE+"╔═══════════════════════════════════════════════════════════════════════╗"+RESET);
+    System.out.println(BOLD+BLUE+"║"+RESET+"                       "+BLUE+"BANKING MANAGEMENT SYSTEM"+RESET+"                       "+BOLD+BLUE+"║"+RESET);
+    System.out.println(BOLD+BLUE+"╚═══════════════════════════════════════════════════════════════════════╝"+RESET);   
+
+    System.out.println("║Welcome To the System, Please Select what do you want to do: ");
+
     int chosenOption = 0;
 
     // Loop for the choice in the first menu
