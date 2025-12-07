@@ -1,0 +1,4 @@
+// Block Account
+public static void blockAccount(int index) {
+    blocked.set(index, true);
+}

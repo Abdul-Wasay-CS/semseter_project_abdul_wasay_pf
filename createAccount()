@@ -1,0 +1,75 @@
+    // Create new account
+    public static void createAccount() {
+        int indexNumber = accountIDToBeAssigned() - 101;
+        scanner.nextLine();
+
+        System.out.print("Enter Account Holder Name: ");
+        accountNames.add("");
+        accountNames.set(indexNumber, scanner.nextLine());
+
+        boolean matchingPINs = false;
+        int finalPIN = 0;
+        String userPINs, userPINsConfirm;
+
+        do {
+            do {
+                System.out.print("Enter new PIN (4 or 8 digits only): ");
+                userPINs = scanner.nextLine();
+
+                if (checkingDigit(userPINs) && (userPINs.length() == 4 || userPINs.length() == 8)) {
+                    System.out.print("Confirm the PIN: ");
+                    userPINsConfirm = scanner.nextLine();
+
+                    if (userPINs.equals(userPINsConfirm)) {
+                        finalPIN = Integer.parseInt(userPINs);
+                        matchingPINs = true;
+                    } else {
+                        System.out.println(RED + "PINs don't match! Try again." + RESET);
+                    }
+                } else {
+                    System.out.println(RED + "Use the correct format for the PIN (4 or 8 digits only)." + RESET);
+                }
+            } while (!matchingPINs);
+            System.out.print("Enter new PIN (4 or 8 digits only): ");
+            userPINs = scanner.nextLine();
+
+            if (checkingDigit(userPINs) && (userPINs.length() == 4 || userPINs.length() == 8)) {
+                System.out.print("Confirm the PIN: ");
+                userPINsConfirm = scanner.nextLine();
+
+                if (userPINs.equals(userPINsConfirm)) {
+                    finalPIN = Integer.parseInt(userPINs);
+                    matchingPINs = true;
+                } else {
+                    System.out.println(RED + "PINs don't match! Try again." + RESET);
+                }
+            } else {
+                System.out.println(RED + "Use the correct format for the PIN (4 or 8 digits only)." + RESET);
+            }
+        } while (!matchingPINs);
+
+        System.out.println("Answer the following security question for future account recovery:\nWhat's your favourite car name?");
+        securityQuestion.add(scanner.nextLine());
+
+
+        while (accountCredentials.size() <= indexNumber) {
+            accountCredentials.add(new ArrayList<>(Arrays.asList(0, 0, 0, 0)));
+        }
+        while (accountExists.size() <= indexNumber) {
+            accountExists.add(false);
+        }
+
+        ArrayList<Integer> credentialsOfCurrentAccount = accountCredentials.get(indexNumber);
+        credentialsOfCurrentAccount.set(IDINDEX, accountIDToBeAssigned());
+        credentialsOfCurrentAccount.set(PININDEX, finalPIN);
+        credentialsOfCurrentAccount.set(BALANCEINDEX, 0);
+        credentialsOfCurrentAccount.set(TRANSFERINDEX, random.nextInt(1000000, 100000000));
+
+        accountExists.set(indexNumber, true);
+        System.out.println(GREEN + "Account Successfully Created!" + RESET);
+        String prompt = ("A new account created by name " + accountNames.get(indexNumber));
+        addLogs(prompt);
+        if (indexNumber == totalAccounts) totalAccounts++;
+
+        viewAccountDetails(indexNumber);
+    }
