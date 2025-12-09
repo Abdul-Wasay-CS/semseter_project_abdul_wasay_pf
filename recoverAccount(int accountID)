@@ -1,0 +1,31 @@
+// Recover account
+public static void recoverAccount(int accountID) {
+    int indexNumber = accountID - 101;
+
+    if (indexNumber < 0 || indexNumber >= accountExists.size() || !accountExists.get(indexNumber)) {
+        System.out.println(RED + "Account doesn't exist!" + RESET);
+        return;
+    }
+    System.out.println("RECOVER ACCOUNT:");
+    System.out.print("Enter your account ID: ");
+    int idToRecover = scanner.nextInt();
+    int indexToRecover = idToRecover - 101;
+    String answer = "";
+
+    for (int i = 3; i > 0; i--) {
+        System.out.println("Answer the following security question:\nWhat's your favourite car?");
+        answer = scanner.nextLine();
+        if (answer != securityQuestion.get(indexToRecover)) {
+            System.out.println(RED + "Wrong Answer!" + RESET);
+            System.out.println(i + " tries remaining.");
+        }
+    }
+
+    if (answer != securityQuestion.get(indexToRecover)) {
+        System.out.println("No more tries remaining.\nExiting...");
+        return;
+    }
+ 
+    blocked.set(indexToRecover, false);
+    System.out.println();
+}

@@ -1,0 +1,30 @@
+public static void main(String[] args) {
+    loadSavedData();
+    do {
+        System.out.println("==================Bank Of Valhalla==================");
+        System.out.println("What do you want to login as?\n1) Owner\n2) Admin\n3) Customer");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice) {
+            case 1:
+                System.out.println("Enter the owner ID: ");
+                int ownerID = scanner.nextInt();
+                System.out.println("Enter the pin: ");
+                int ownerPIN = scanner.nextInt();
+                if (ownerID == ownerCredentials[0] && ownerPIN == ownerCredentials[1]) {
+                    ownerMenu();
+                } else System.out.println("Incorrect Credentials");
+                break;
+            case 2:
+                userMenu();
+                break;
+            case 3:
+                System.out.println("Enter your ID number: ");
+                int idNumber = scanner.nextInt();
+                adminMenu(idNumber);
+                break;
+            default:
+                System.out.println("Choose a valid option from the given ones.");
+        }
+    } while (true);
+}

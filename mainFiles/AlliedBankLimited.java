@@ -1,0 +1,67 @@
+import java.util.*;
+import java.io.*;
+
+public class AlliedBankLimited
+{
+
+    //  ANSI escape codes for colors
+
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String MAGENTA = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
+    
+    //  bright colors
+    public static final String BRIGHTBLACK = "\u001B[90m";
+    public static final String BRIGHTRED = "\u001B[91m";
+    public static final String BRIGHTGREEN = "\u001B[92m";
+    public static final String BRIGHTYELLOW = "\u001B[93m";
+    public static final String BRIGHTBLUE = "\u001B[94m";
+    public static final String BRIGHTMAGENTA = "\u001B[95m";
+    public static final String BRIGHTCYAN = "\u001B[96m";
+    public static final String BRIGHTWHITE = "\u001B[97m";
+    
+    //  for formatting colors.
+    public static final String RESET = "\u001B[0m";
+    public static final String BOLD = "\u001B[1m";
+    public static final String UNDERLINE = "\u001B[4m";
+
+    //  Admin and owner data variables
+
+    static ArrayList<Boolean> accountExists = new ArrayList<>();
+    static int[] ownerCredentials = {02, 72766};
+    static String ownerName = "Solitary Monarch";
+    static int[][] adminCredentials = new int[5][2]; // Index 0, and 1 are id number, and pin
+    static String[] adminName = new String[5];
+    static boolean[] adminExists = new boolean[5];
+
+    //  user data variables  
+
+    static ArrayList<ArrayList<Integer>> accountCredentials = new ArrayList<>();
+    static ArrayList<String> securityQuestion = new ArrayList<>();
+    static ArrayList<String> accountNames = new ArrayList<>();
+    
+    //  ArrayLists to keep track of user's account state and keep action history of the entire bank account.
+
+    static ArrayList<String> logs = new ArrayList<>();
+    static ArrayList<Boolean> blocked = new ArrayList<Boolean>();
+    static int totalAccounts = 0;
+    static int userID;
+    
+    //  constants representing index number of user's each information.
+
+    static final int IDINDEX = 0, PININDEX = 1, BALANCEINDEX = 2, TRANSFERINDEX = 3;
+    
+
+    //  main method finally starts.
+
+    public static void main(String[] args)
+    {
+        Scanner input = new Scanner(System.in);
+        
+    }
+}

@@ -1,0 +1,17 @@
+// Menu for the Owner
+public static void ownerMenu() {
+    System.out.println("=================Owner Menu===============\n1) Create an admin account\n2) Delete an admin account\n3) Exit");
+    int choice = scanner.nextInt();
+    switch (choice) {
+        case 1:
+            createAdmin();
+            break;
+        case 2:
+            deleteAdmin();
+            break;
+        case 3:
+            return;
+        default:
+            System.out.println("Please select from the given options!");
+    }
+}

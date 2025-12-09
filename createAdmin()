@@ -1,0 +1,36 @@
+// Add Admin Account
+public static void createAdmin() {
+    System.out.println("Enter Admin Name: ");
+    String adminName = scanner.nextLine();
+
+    String userPINs;
+    String userPINsConfirm;
+    int finalPIN = 0;
+    boolean matchingPINs = false;
+
+    do {
+        System.out.print("Enter new PIN (4 or 8 digits only): ");
+        userPINs = scanner.nextLine();
+ 
+        if (checkingDigit(userPINs) && (userPINs.length() == 4 || userPINs.length() == 8)) {
+            System.out.print("Confirm the PIN: ");
+            userPINsConfirm = scanner.nextLine();
+ 
+            if (userPINs.equals(userPINsConfirm)) {
+                finalPIN = Integer.parseInt(userPINs);
+                matchingPINs = true;
+            } else {
+                System.out.println(RED + "PINs don't match! Try again." + RESET);
+            }
+        } else {
+            System.out.println(RED + "Use the correct format for the PIN (4 or 8 digits only)." + RESET);
+        }
+    } while (!matchingPINs);
+    System.out.print("Enter new PIN (4 or 8 digits only): ");
+
+    adminCredentials[adminIDToBeAssigned() - 505][1] = finalPIN;
+    adminCredentials[adminIDToBeAssigned() - 505][0] = adminIDToBeAssigned();
+    adminExists[adminIDToBeAssigned() - 505] = true;
+    System.out.println("Admin Account Created!");
+}
+

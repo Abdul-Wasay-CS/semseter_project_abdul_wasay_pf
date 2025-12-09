@@ -1,0 +1,4 @@
+// Add logs
+public static void addLogs(String activity) {
+    logs.add(activity);
+}
