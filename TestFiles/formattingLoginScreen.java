@@ -28,19 +28,25 @@ public class formattingLoginScreen
 
 
   
-  public static void main (String args[])
-  {
-    
-      System.out.println(
-                GREEN+"╔═════════════════════════════════════════════╗\n"+RESET
-              + GREEN+"║"+RESET+"    "+YELLOW+"1. Create New Account "+RESET+"                   "+BLUE+"║"+RESET+"\n"
-              + GREEN+"║"+RESET+"    "+YELLOW+"2. Log Into Account"+RESET+"                      "+BLUE+"║"+RESET+"\n"
-              + GREEN+"║"+RESET+"    "+YELLOW+"3. Recover Account "+RESET+"                      "+BLUE+"║"+RESET+"\n"
-              + GREEN+"║"+RESET+"    "+YELLOW+"4. Exit            "+RESET+"                      "+BLUE+"║"+RESET+"\n"
-              + GREEN+"╚═════════════════════════════════════════════╝"+RESET+"\n"
-              + GREEN+"Choose an option: "+RESET);
+  public static void main (String args[]) throws InterruptedException
+  { 
+    final int FRAME_DELAY = 200;  // ms per frame
+    final String[] FRAMES = {
+        "     ",
+        ".    ",
+        "..   ",
+        "...  ",
+        ".... ",
+        "....."
+    };
 
-      // Choice Switch
-      int chosenOption = scanner.nextInt();
+    System.out.print("Please wait");
+    for(int i = 0; i < 30; i++)
+    {  
+    // Duration in frames
+        System.out.print("\rPlease wait" + FRAMES[i % FRAMES.length]);
+        Thread.sleep(FRAME_DELAY);
+    }
+    System.out.println("\rDone!           ");
   }
 }
