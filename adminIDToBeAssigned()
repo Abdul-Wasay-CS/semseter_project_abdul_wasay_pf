@@ -1,0 +1,11 @@
+// Admin ID To Be Assigned
+public static int adminIDToBeAssigned() {
+    int idToAssign = 0;
+    for (int i = 0; i < 5; i++) {
+        if (adminExists[i] == true) {
+            idToAssign = i - 505;
+            break;
+        }
+    }
+    return idToAssign;
+}

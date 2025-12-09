@@ -1,0 +1,11 @@
+// Delete Admin Account
+public static void deleteAdmin() {
+    System.out.println("Enter the Admin ID you want to delete: ");
+    int idToDelete = scanner.nextInt();
+    int indexToDelete = idToDelete - 505;
+
+    adminCredentials[indexToDelete][0] = 0;
+    adminCredentials[indexToDelete][1] = 0;
+    adminName[indexToDelete] = "";
+    adminExists[indexToDelete] = false;
+}

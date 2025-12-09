@@ -1,0 +1,34 @@
+// Menu for Admins
+public static void adminMenu(int idNumber) {
+    if (adminExists[idNumber - 505] == false) {
+        System.out.println("Wrong Admin Credentials.");
+        return;
+    }
+
+
+    System.out.println("===========Admin Menu===========");
+    System.out.println("What do you want to do?\n1) View the logs\n2) Delete an account\n3) Create an account\n4)Block an account");
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+    int index = 0;
+    switch (choice) {
+        case 1:
+            viewLogs();
+            break;
+        case 2:
+            System.out.print("Enter index of the account: ");
+            index = scanner.nextInt();
+            deleteAccount(index);
+            break;
+        case 3:
+            createAccount();
+            break;
+        case 4:
+            System.out.print("Enter index of the account: ");
+            index = scanner.nextInt();
+            blockAccount(index);
+            break;
+        default:
+            System.out.println("Please try again with a valid option!");
+    }
+}

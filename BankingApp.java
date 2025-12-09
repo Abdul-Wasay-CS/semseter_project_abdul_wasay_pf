@@ -49,7 +49,7 @@ public class BankingApp {
     loadSavedData();
     for(int i=1; i<=5; i++)
     {
-      final int DELAYTIME = 60;
+      final int DELAYTIME = 50;
       System.out.print("\rLoading accuont id.....          ");
       Thread.sleep(DELAYTIME);
       System.out.print("\rLoading account pin.....         ");
@@ -63,9 +63,9 @@ public class BankingApp {
       System.out.print("\r                                 ");   // to clear out the last leftover message
     }
     System.out.println();
-    System.out.println(BOLD+BLUE+"╔═══════════════════════════════════════════════════════════════════════╗"+RESET);
-    System.out.println(BOLD+BLUE+"║"+RESET+"                       "+BLUE+"BANKING MANAGEMENT SYSTEM"+RESET+"                       "+BOLD+BLUE+"║"+RESET);
-    System.out.println(BOLD+BLUE+"╚═══════════════════════════════════════════════════════════════════════╝"+RESET);   
+    System.out.println(BOLD+CYAN+"        ╔═══════════════════════════════════════════════════════════════════════╗"+RESET);
+    System.out.println(BOLD+CYAN+"        ║"+RESET+"                       "+BRIGHTGREEN+"BANKING MANAGEMENT SYSTEM"+RESET+"                       "+BOLD+CYAN+"║"+RESET);
+    System.out.println(BOLD+CYAN+"        ╚═══════════════════════════════════════════════════════════════════════╝"+RESET);   
 
     System.out.println("║Welcome To the System, Please Select what do you want to do: ");
 
@@ -73,15 +73,15 @@ public class BankingApp {
 
     // Loop for the choice in the first menu
     do {
-
       System.out.println(
-                BOLD+YELLOW+"╔═════════════════════════════════════════════╗\n"+RESET
-              + BOLD+YELLOW+"║"+RESET+"    "+WHITE+"1. Create New Account "+RESET+"                   "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"║"+RESET+"    "+WHITE+"2. Log Into Account"+RESET+"                      "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"║"+RESET+"    "+WHITE+"3. Recover Account "+RESET+"                      "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"║"+RESET+"    "+RED+"4. Exit            "+RESET+"                      "+YELLOW+"║"+RESET+"\n"
-              + BOLD+YELLOW+"╚═════════════════════════════════════════════╝"+RESET+"\n"
-              + BRIGHTBLUE+"Choose an option: "+RESET);
+                BOLD+YELLOW+"     ╔═════════════════════════════════════════════════════════════════════════════════╗\n"+RESET
+              + BOLD+YELLOW+"     ║"+RESET+"   Welcome To the System, Please Select what do you want to do:                  ║\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"1. Create New Account "+RESET+"                                                       "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"2. Log Into Account"+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"3. Recover Account "+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+RED+"4. Exit            "+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ╚═════════════════════════════════════════════════════════════════════════════════╝"+RESET+"\n"
+              + "\n"+BRIGHTCYAN+"   Choose an option: "+RESET);
 
       // Choice Switch
       chosenOption = scanner.nextInt();

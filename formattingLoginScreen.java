@@ -28,19 +28,46 @@ public class formattingLoginScreen
 
 
   
-  public static void main (String args[])
+  public static void main (String args[]) throws InterruptedException
   {
     
+    // Load Previously Saved Data
+    //loadSavedData();
+    for(int i=1; i<=5; i++)
+    {
+      final int DELAYTIME = 50;
+      System.out.print("\rLoading accuont id.....          ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account pin.....         ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account balance......    ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account transfer id......");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\rLoading account names......      ");
+      Thread.sleep(DELAYTIME);
+      System.out.print("\r                                 ");   // to clear out the last leftover message
+    }
+    System.out.println();
+    System.out.println(BOLD+CYAN+"                          ╔═══════════════════════════════════════════════════════════════════════╗"+RESET);
+    System.out.println(BOLD+CYAN+"                          ║"+RESET+"                       "+BRIGHTGREEN+"BANKING MANAGEMENT SYSTEM"+RESET+"                       "+BOLD+CYAN+"║"+RESET);
+    System.out.println(BOLD+CYAN+"                          ╚═══════════════════════════════════════════════════════════════════════╝"+RESET);   
+
+
+    int chosenOption = 0;
+
+    // Loop for the choice in the first menu
       System.out.println(
-                GREEN+"╔═════════════════════════════════════════════╗\n"+RESET
-              + GREEN+"║"+RESET+"    "+YELLOW+"1. Create New Account "+RESET+"                   "+BLUE+"║"+RESET+"\n"
-              + GREEN+"║"+RESET+"    "+YELLOW+"2. Log Into Account"+RESET+"                      "+BLUE+"║"+RESET+"\n"
-              + GREEN+"║"+RESET+"    "+YELLOW+"3. Recover Account "+RESET+"                      "+BLUE+"║"+RESET+"\n"
-              + GREEN+"║"+RESET+"    "+YELLOW+"4. Exit            "+RESET+"                      "+BLUE+"║"+RESET+"\n"
-              + GREEN+"╚═════════════════════════════════════════════╝"+RESET+"\n"
-              + GREEN+"Choose an option: "+RESET);
+                BOLD+YELLOW+"     ╔═════════════════════════════════════════════════════════════════════════════════╗\n"+RESET
+              + BOLD+YELLOW+"     ║"+RESET+"   Welcome To the System, Please Select what do you want to do:                  ║\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"1. Create New Account "+RESET+"                                                       "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"2. Log Into Account"+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+WHITE+"3. Recover Account "+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ║"+RESET+"    "+RED+"4. Exit            "+RESET+"                                                          "+YELLOW+"║"+RESET+"\n"
+              + BOLD+YELLOW+"     ╚═════════════════════════════════════════════════════════════════════════════════╝"+RESET+"\n"
+              + "\n"+BRIGHTCYAN+"   Choose an option: "+RESET);
 
       // Choice Switch
-      int chosenOption = scanner.nextInt();
+      chosenOption = scanner.nextInt();
   }
 }
