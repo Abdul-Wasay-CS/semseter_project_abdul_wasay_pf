@@ -231,32 +231,10 @@ public class AlliedBankLimited
         blocked.set(index, true);
     }// block account
 
-    //  For  waiting time between each action.
-
-    public void loadingScreen() throws InterruptedException
-    {
-        final int FRAME_DELAY = 200;  // ms per frame
-        final String[] FRAMES = {
-            "     ",
-            ".    ",
-            "..   ",
-            "...  ",
-            ".... ",
-            "....."
-        };
-
-        System.out.print("Please wait");
-        for(int i = 0; i < 30; i++)
-        {  
-        // Duration in frames
-            System.out.print("\rPlease wait" + FRAMES[i % FRAMES.length]);
-            Thread.sleep(FRAME_DELAY);
-        }
-        System.out.println("\rDone!           ");
-    }
 
 
-        // Create new account
+    // Create new account
+    
     public static void createAccount() 
     {
         int indexNumber = accountIDToBeAssigned() - 101;
@@ -440,6 +418,115 @@ public class AlliedBankLimited
         }
     }// deleteAdmin
 
+    // Menu for the Owner
+
+    public static void ownerMenu() 
+    {
+        try
+        {
+            while(true)
+            {
+                System.out.println("""
+                            =====================Owner Menu============================
+                            |                 What do you want to do?                 |
+                            |                                                         |
+                            |   1) Create an Admin account                            |
+                            |                                                         |
+                            |   2) Delete an Admin account                            |
+                            |                                                         |
+                            |   3)Exit                                                |
+                            ===========================================================
+                            
+                            Enter Your Choice:  """);
+                
+                int choice = scanner.nextInt();
+                switch (choice) 
+                {
+                    case 1:
+                        createAdmin();
+                        break;
+                    case 2:
+                        deleteAdmin();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Please select from the given options!");
+                }
+
+                break;  //  Only executes if no exception raised so far
+            }
+        }
+    }// OwnerMenu
+
+    // Recover account
+    public static void recoverAccount(int accountID) 
+    {
+        int indexNumber = accountID - 101;
+
+        if (indexNumber < 0 || indexNumber >= accountExists.size() || !accountExists.get(indexNumber)) {
+            System.out.println(RED + "Account doesn't exist!" + RESET);
+            return;
+        }
+        System.out.println("RECOVER ACCOUNT:");
+        System.out.print("Enter your account ID: ");
+        int idToRecover = scanner.nextInt();
+        int indexToRecover = idToRecover - 101;
+        String answer = "";
+
+        for (int i = 3; i > 0; i--) {
+            System.out.println("Answer the following security question:\nWhat's your favourite car?");
+            answer = scanner.nextLine();
+            if (answer != securityQuestion.get(indexToRecover)) {
+                System.out.println(RED + "Wrong Answer!" + RESET);
+                System.out.println(i + " tries remaining.");
+            }
+        }
+
+        if (answer != securityQuestion.get(indexToRecover)) {
+            System.out.println("No more tries remaining.\nExiting...");
+            return;
+        }
     
+        blocked.set(indexToRecover, false);
+        System.out.println();
+    }
+
+    // View logs (for admin only)
+
+    public static void viewLogs() 
+    {
+        for (int i = logs.size() - 1; i >= 0; i--) 
+        {
+            System.out.println(i + ") " + logs.get(i));
+        }
+    }
+
+    //  For  waiting time between each action.
+
+    //  Keep this method at the last of the program. For Easy Modification
+    
+
+    public void loadingScreen() throws InterruptedException
+    {
+        final int FRAME_DELAY = 200;  // ms per frame
+        final String[] FRAMES = {
+            "     ",
+            ".    ",
+            "..   ",
+            "...  ",
+            ".... ",
+            "....."
+        };
+
+        System.out.print("Please wait");
+        for(int i = 0; i < 30; i++)
+        {  
+        // Duration in frames
+            System.out.print("\rPlease wait" + FRAMES[i % FRAMES.length]);
+            Thread.sleep(FRAME_DELAY);
+        }
+        System.out.println("\rDone!           ");
+    }
 
 }//class

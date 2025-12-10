@@ -30,45 +30,6 @@ public class formattingLoginScreen
   
   public static void main (String args[]) throws InterruptedException
   {
-    
-    // Load Previously Saved Data
-    //loadSavedData();
-    for(int i=1; i<=5; i++)
-    {
-      final int DELAYTIME = 50;
-      System.out.print("\rLoading accuont id.....          ");
-      Thread.sleep(DELAYTIME);
-      System.out.print("\rLoading account pin.....         ");
-      Thread.sleep(DELAYTIME);
-      System.out.print("\rLoading account balance......    ");
-      Thread.sleep(DELAYTIME);
-      System.out.print("\rLoading account transfer id......");
-      Thread.sleep(DELAYTIME);
-      System.out.print("\rLoading account names......      ");
-      Thread.sleep(DELAYTIME);
-      System.out.print("\r                                 ");   // to clear out the last leftover message
-    }
-    System.out.println();
-    System.out.println(BOLD+CYAN+"                          ╔═══════════════════════════════════════════════════════════════════════╗"+RESET);
-    System.out.println(BOLD+CYAN+"                          ║"+RESET+"                       "+BRIGHTGREEN+"BANKING MANAGEMENT SYSTEM"+RESET+"                       "+BOLD+CYAN+"║"+RESET);
-    System.out.println(BOLD+CYAN+"                          ╚═══════════════════════════════════════════════════════════════════════╝"+RESET);   
-
-
-    int chosenOption = 0;
-
- System.out.println(
-              BRIGHTCYAN+"\n               ╔═══════════════════════════════════════════════════════╗\n"+RESET
-              +BRIGHTCYAN+  "               ║                                                       ║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       1. Check Balance                                ║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       2. Deposit Money                                ║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       3. Withdraw Money                               ║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       4. Transfer Money                               ║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BRIGHTWHITE+"       5. View Account Details                         ║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BOLD+BRIGHTRED+"       6. Delete Account                               "+RESET+BRIGHTCYAN+"║\n"+RESET
-              +BRIGHTCYAN+  "               ║"+BOLD+GREEN+"       7. Exit                                         "+RESET+BRIGHTCYAN+"║\n"+RESET
-              +BRIGHTCYAN+  "               ║       Choose an option:                               ║\n"+RESET
-              +BRIGHTCYAN+  "               ║                                                       ║\n"+RESET
-              +BRIGHTCYAN+  "               ╚═══════════════════════════════════════════════════════╝\n"+RESET);
-      // Choice Switch
-  }
+     System.out.println("=================Owner Menu===============\n1) Create an admin account\n2) Delete an admin account\n3) Exit");
+  }   
 }

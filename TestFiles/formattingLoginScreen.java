@@ -30,74 +30,19 @@ public class formattingLoginScreen
   
  public static void main(String[] args) throws InterruptedException
  {
-   loadSavedData();
-    do {
-        try{
-          System.out.print("""
-          ================Allied Bank Limited=================
-          |                                                  |
-          |   What do you want to login as?                  |
-          |                                                  |
-          |   1) Owner                3) Customer            |
-          |                                                  |
-          |   2) Admin                4) Exit                |
-          |                                                  |
-          ====================================================
-
-
-          Enter Your Choice: """);
-          int choice = scanner.nextInt();
-          scanner.nextLine();
-          switch (choice) 
-          {
-              case 1:
-                System.out.println("Enter the owner ID: ");
-                int ownerID = scanner.nextInt();
-                System.out.println("Enter the pin: ");
-                int ownerPIN = scanner.nextInt();
-                if (ownerID == ownerCredentials[0] && ownerPIN == ownerCredentials[1]) {
-                    ownerMenu();
-                } else System.out.println("Incorrect Credentials");
-                break;
-              case 2:
-                userMenu();
-                break;
-              case 3:
-                System.out.println("Enter your ID number: ");
-                int idNumber = scanner.nextInt();
-                adminMenu(idNumber);
-                break;
-              case 4:
-
-                System.out.println("""
-                ====================================================
-                |                                                  |
-                |         Thank you for using Allied Bank          |
-                |                                                  |
-                |                   Good Bye!                      |
-                |                                                  |
-                =====================================================""");
-
-                System.exit(0);
-                break;
-              default:
-                  System.out.println("Choose a valid option from the given ones.\n");
-                  Thread.sleep(1500);  // time for user to see the message 
-          }
-        }
-        catch(InputMismatchException e1)
-        {
-          System.out.println(" \n Please enter an Integer only.");    
-          scanner.nextLine(); //  stops the infinite loop madness.
-
-          Thread.sleep(1000);  // time for user to see the message 
-        }
-        catch(Exception e)
-        {
-          System.out.print("Unxepected error: "+e.toString());
-          Thread.sleep(1000);  // time for user to see the message 
-        }
-    } while (true);
-}//main
+  System.out.println("""
+                      =====================Owner Menu============================
+                      |                 What do you want to do?                 |
+                      |                                                         |
+                      |   1) Create an Admin account                            |
+                      |                                                         |
+                      |   2) Delete an Admin account                            |
+                      |                                                         |
+                      |   3)Exit                                                |
+                      ===========================================================
+                      
+                      Enter Your Choice:  """);
+          
+   }//main
 
 }
