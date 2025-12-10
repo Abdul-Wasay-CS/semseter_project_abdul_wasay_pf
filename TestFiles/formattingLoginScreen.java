@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 public class formattingLoginScreen
 {
   static Scanner scanner = new Scanner(System.in);
@@ -28,25 +28,76 @@ public class formattingLoginScreen
 
 
   
-  public static void main (String args[]) throws InterruptedException
-  { 
-    final int FRAME_DELAY = 200;  // ms per frame
-    final String[] FRAMES = {
-        "     ",
-        ".    ",
-        "..   ",
-        "...  ",
-        ".... ",
-        "....."
-    };
+ public static void main(String[] args) throws InterruptedException
+ {
+   loadSavedData();
+    do {
+        try{
+          System.out.print("""
+          ================Allied Bank Limited=================
+          |                                                  |
+          |   What do you want to login as?                  |
+          |                                                  |
+          |   1) Owner                3) Customer            |
+          |                                                  |
+          |   2) Admin                4) Exit                |
+          |                                                  |
+          ====================================================
 
-    System.out.print("Please wait");
-    for(int i = 0; i < 30; i++)
-    {  
-    // Duration in frames
-        System.out.print("\rPlease wait" + FRAMES[i % FRAMES.length]);
-        Thread.sleep(FRAME_DELAY);
-    }
-    System.out.println("\rDone!           ");
-  }
+
+          Enter Your Choice: """);
+          int choice = scanner.nextInt();
+          scanner.nextLine();
+          switch (choice) 
+          {
+              case 1:
+                System.out.println("Enter the owner ID: ");
+                int ownerID = scanner.nextInt();
+                System.out.println("Enter the pin: ");
+                int ownerPIN = scanner.nextInt();
+                if (ownerID == ownerCredentials[0] && ownerPIN == ownerCredentials[1]) {
+                    ownerMenu();
+                } else System.out.println("Incorrect Credentials");
+                break;
+              case 2:
+                userMenu();
+                break;
+              case 3:
+                System.out.println("Enter your ID number: ");
+                int idNumber = scanner.nextInt();
+                adminMenu(idNumber);
+                break;
+              case 4:
+
+                System.out.println("""
+                ====================================================
+                |                                                  |
+                |         Thank you for using Allied Bank          |
+                |                                                  |
+                |                   Good Bye!                      |
+                |                                                  |
+                =====================================================""");
+
+                System.exit(0);
+                break;
+              default:
+                  System.out.println("Choose a valid option from the given ones.\n");
+                  Thread.sleep(1500);  // time for user to see the message 
+          }
+        }
+        catch(InputMismatchException e1)
+        {
+          System.out.println(" \n Please enter an Integer only.");    
+          scanner.nextLine(); //  stops the infinite loop madness.
+
+          Thread.sleep(1000);  // time for user to see the message 
+        }
+        catch(Exception e)
+        {
+          System.out.print("Unxepected error: "+e.toString());
+          Thread.sleep(1000);  // time for user to see the message 
+        }
+    } while (true);
+}//main
+
 }
