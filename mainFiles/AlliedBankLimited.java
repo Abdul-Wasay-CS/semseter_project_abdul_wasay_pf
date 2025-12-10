@@ -72,7 +72,9 @@ public class AlliedBankLimited
 
     public static void main(String[] args)
     {
-        loadSavedData();
+        loadAdminData();
+        loadCostumerData();
+        loadOwnerData();
         do 
         {
             try{
