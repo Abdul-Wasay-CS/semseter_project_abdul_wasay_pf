@@ -1,4 +1,28 @@
-// Add logs
+// Add logs to the array and file.
 public static void addLogs(String activity) {
     logs.add(activity);
+
+    try
+    {
+        PrintWriter pw = new PrintWriter(new FileWriter("BankLogs.txt",true));
+
+        //  save the activity in the file.
+
+        pw.println(activity);
+
+        pw.close();
+    }
+    catch(FileNotFoundException e)
+    {
+        System.out.print("File was not found. Couldnt Update logs. ");
+
+    }
+    catch( IOException e1)
+    {
+        System.out.print("Something went wrong with the files.");
+    }
+    catch( Exception e2)
+    {
+        System.out.print("An Unexpected Error Occurred.");
+    }
 }

@@ -6,33 +6,6 @@ public class AlliedBankLimited
     //  Scanner for user input
 
     static Scanner scanner = new Scanner(System.in);
-    
-
-    //  ANSI escape codes for colors
-
-    public static final String BLACK = "\u001B[30m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String BLUE = "\u001B[34m";
-    public static final String MAGENTA = "\u001B[35m";
-    public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
-    
-    //  bright colors
-    public static final String BRIGHTBLACK = "\u001B[90m";
-    public static final String BRIGHTRED = "\u001B[91m";
-    public static final String BRIGHTGREEN = "\u001B[92m";
-    public static final String BRIGHTYELLOW = "\u001B[93m";
-    public static final String BRIGHTBLUE = "\u001B[94m";
-    public static final String BRIGHTMAGENTA = "\u001B[95m";
-    public static final String BRIGHTCYAN = "\u001B[96m";
-    public static final String BRIGHTWHITE = "\u001B[97m";
-    
-    //  for formatting colors.
-    public static final String RESET = "\u001B[0m";
-    public static final String BOLD = "\u001B[1m";
-    public static final String UNDERLINE = "\u001B[4m";
 
     //  logs variables
 
@@ -40,7 +13,6 @@ public class AlliedBankLimited
 
     //  owner data variables
 
-    static ArrayList<Boolean> accountExists = new ArrayList<>();
     static int[] ownerCredentials = {02, 72766};
     static String ownerName = "Solitary Monarch";
     
@@ -55,10 +27,10 @@ public class AlliedBankLimited
     static ArrayList<ArrayList<Integer>> accountCredentials = new ArrayList<>();
     static ArrayList<String> securityQuestion = new ArrayList<>();
     static ArrayList<String> accountNames = new ArrayList<>();
+    static ArrayList<Boolean> accountExists = new ArrayList<>();
     
     //  ArrayLists to keep track of user's account state and keep action history of the entire bank account.
 
-    static ArrayList<String> logs = new ArrayList<>();
     static ArrayList<Boolean> blocked = new ArrayList<Boolean>();
     static int totalAccounts = 0;
     static int userID;
@@ -72,9 +44,7 @@ public class AlliedBankLimited
 
     public static void main(String[] args)
     {
-        loadAdminData();
-        loadCostumerData();
-        loadOwnerData();
+     
         do 
         {
             try{
@@ -93,21 +63,47 @@ public class AlliedBankLimited
             Enter Your Choice: """);
             int choice = scanner.nextInt();
             scanner.nextLine();
+
+            loadingScreen();
             switch (choice) 
             {
                 case 1:
+                    loadOwnerData();
                     System.out.println("Enter the owner ID: ");
                     int ownerID = scanner.nextInt();
                     System.out.println("Enter the pin: ");
-                    int ownerPIN = scanner.nextInt();
-                    if (ownerID == ownerCredentials[0] && ownerPIN == ownerCredentials[1]) {
-                        ownerMenu();
-                    } else System.out.println("Incorrect Credentials");
+                    
+                    //  Put an while , try-catch, So no id isnt asked repititevly.
+                    while(true)
+                    {
+                        try
+                        {
+                            int ownerPIN = scanner.nextInt();
+                            if (ownerID == ownerCredentials[0] && ownerPIN == ownerCredentials[1]) 
+                                ownerMenu();
+                            else 
+                                System.out.println("Incorrect Credentials");
+                            break;
+                        }
+                        catch(InputMismatchException e)
+                        {
+                            System.out.print("Pin is always in integer, decimal values not allowed. ");
+                            scanner.nextLine();
+                        }
+                        catch(Exception e1)
+                        {
+                            System.out.print("Something Went Wrong.");
+                        }
+                    }
                     break;
+    
                 case 2:
+
+                    loadCustomerData();
                     userMenu();
                     break;
                 case 3:
+                    loadAdminData();
                     System.out.println("Enter your ID number: ");
                     int idNumber = scanner.nextInt();
                     adminMenu(idNumber);
@@ -135,22 +131,45 @@ public class AlliedBankLimited
             System.out.println(" \n Please enter an Integer only.");    
             scanner.nextLine(); //  stops the infinite loop madness.
 
-            Thread.sleep(1000);  // time for user to see the message 
+            loadingScreen();
             }
             catch(Exception e)
             {
             System.out.print("Unxepected error: "+e.toString());
-            Thread.sleep(1000);  // time for user to see the message 
+            loadingScreen();  // time for user to see the message 
             }
         } while (true);
-    }
+    }// main
     
-    // Add logs
+    //  Add logs to the array and file.
     
-    public static void addLogs(String activity) 
-    {
+    public static void addLogs(String activity) {
         logs.add(activity);
-    }
+
+        try
+        {
+            PrintWriter pw = new PrintWriter(new FileWriter("BankLogs.txt",true));
+
+            //  save the activity in the file.
+
+            pw.println(activity);
+
+            pw.close();
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.print("File was not found. Couldnt Update logs. ");
+
+        }
+        catch( IOException e1)
+        {
+            System.out.print("Something went wrong with the files.");
+        }
+        catch( Exception e2)
+        {
+            System.out.print("An Unexpected Error Occurred.");
+        }
+    }// addLogs
     
 
     //  Admin ID To Be Assigned, 
@@ -171,6 +190,7 @@ public class AlliedBankLimited
     }// adminIDToBeAssigned
 
     // Menu for Admins
+
     public static void adminMenu(int idNumber) 
     {
         // this will raise exception if the number recieved from main isnt checked to be less than 5.
@@ -396,6 +416,7 @@ public class AlliedBankLimited
                 int indexToDelete = idToDelete - 505;
                 
                 // set to zero as an solution for array's non-mutable nature
+
                 adminCredentials[indexToDelete][0] = 0;
                 adminCredentials[indexToDelete][1] = 0;
                 adminName[indexToDelete] = "";
@@ -407,11 +428,11 @@ public class AlliedBankLimited
             {
                 System.out.println("Please enter an integer only.");
             }
-            catch(ArrayIndexOutOfBoundsException)
+            catch(ArrayIndexOutOfBoundsException e2)
             {
                 System.out.println("Invalid Admin ID");
             }
-            catch(Exception e2)
+            catch(Exception e3)
             {
                 System.out.println("Unexpected Error");
             }
@@ -457,6 +478,11 @@ public class AlliedBankLimited
                 break;  //  Only executes if no exception raised so far
             }
         }
+        catch(InputMismatchException e)
+        {
+            System.out.println("Please Enter An Integer Only! ");
+            scanner.nextLine();
+        }
     }// OwnerMenu
 
     // Recover account
@@ -464,7 +490,8 @@ public class AlliedBankLimited
     {
         int indexNumber = accountID - 101;
 
-        if (indexNumber < 0 || indexNumber >= accountExists.size() || !accountExists.get(indexNumber)) {
+        if (indexNumber < 0 || indexNumber >= accountExists.size() || !accountExists.get(indexNumber)) 
+        {
             System.out.println(RED + "Account doesn't exist!" + RESET);
             return;
         }
@@ -474,16 +501,19 @@ public class AlliedBankLimited
         int indexToRecover = idToRecover - 101;
         String answer = "";
 
-        for (int i = 3; i > 0; i--) {
+        for (int i = 3; i > 0; i--) 
+        {
             System.out.println("Answer the following security question:\nWhat's your favourite car?");
             answer = scanner.nextLine();
-            if (answer != securityQuestion.get(indexToRecover)) {
+            if (answer != securityQuestion.get(indexToRecover)) 
+            {
                 System.out.println(RED + "Wrong Answer!" + RESET);
                 System.out.println(i + " tries remaining.");
             }
         }
 
-        if (answer != securityQuestion.get(indexToRecover)) {
+        if (answer != securityQuestion.get(indexToRecover)) 
+        {
             System.out.println("No more tries remaining.\nExiting...");
             return;
         }
@@ -502,31 +532,126 @@ public class AlliedBankLimited
         }
     }
 
-    //  For  waiting time between each action.
 
-    //  Keep this method at the last of the program. For Easy Modification
-    
-
-    public void loadingScreen() throws InterruptedException
+    public static boolean checkingDigits(String userPINsString)
     {
-        final int FRAME_DELAY = 200;  // ms per frame
-        final String[] FRAMES = {
-            "     ",
-            ".    ",
-            "..   ",
-            "...  ",
-            ".... ",
-            "....."
-        };
+        for(int i=0; i<userPINsString.length(); i++)
+        {
+            currentChar = userPINsString.charAt(i);
 
-        System.out.print("Please wait");
-        for(int i = 0; i < 30; i++)
-        {  
-        // Duration in frames
-            System.out.print("\rPlease wait" + FRAMES[i % FRAMES.length]);
-            Thread.sleep(FRAME_DELAY);
+            if(!(Character.isDigit(currentChar)))
+                return false;
+
         }
-        System.out.println("\rDone!           ");
+
+        //  only executes if all the characters were digits
+
+        return true;    
+    }// checkingDigits
+
+    public static void userMenu()
+    {
+        while(true)
+        {
+            System.out.println("Enter your Login id: ");
+            userID = scanner.nextInt();
+            if(userID > accountExists.size() || userID < 101)
+            {
+                System.out.println("Invalid ID, Please enter a valid Id: ");
+                continue;
+            }
+            
+            if(accountExists.get(userID-101) ==true && blocked.get(userID-101))
+            {
+                System.out.println("Login Succesfull!");
+                loadingScreen();
+                System.out.printf("""
+                    =============================User Menu===============================
+                    |                                                                   |
+                    |   1)  View Account Detials            2)  Withrdraw Money         |
+                    |                                                                   |
+                    |   3)  Transfer Money                  4)  Check Balance           |
+                    |                                                                   |
+                    |                       5)  Log out                                 |
+                    |                                                                   |
+                    =====================================================================
+
+                    Enter Your Choice:  """);
+                
+                //  incase user enters something other than integer.
+                int userChoice;
+                while(true)
+                {
+                    try
+                    {
+                        userChoice = scanner.nexInt();
+                        break;
+                    }
+                    catch(InputMismatchExcpetion e1)
+                    {
+                        System.out.println("Please Enter an Integer Only. ");
+                        scanner.nextLine();  //  stops the infinte catch madness
+                        loadingScreen("Please Wait");
+                    }
+                }//end of while
+
+                switch(userChoice)
+                {
+                    case 1:
+                        loadingScreen("Loading Account Details");
+                        viewAccountDetials();
+                        break;
+                    case 2:
+                        loadingScreen("Loading balance");
+                        withdrawMoney();
+                        break;
+                    case 3:
+                        loadingScreen("Loading Resources");
+                        transferMoney();
+                        break;
+                    case 4:
+                        loadingScreen("Loading Current Balance");
+                        checkBalance();
+                        break;
+                    case 5:
+                        loadingScreen("Logging Out");
+                        return;
+                    default:
+                        System.out.print("Choice Not Valid! ");
+                        loadingScreen("Going Back to User Menu");
+                }
+            }
+            else
+            {
+                System.out.print("""
+                    Account Id Not found
+                    Do you want to go back to main Menu (y = yes , n = no ) :  """);
+                char userChoice = input.next().charAt(0); //  made string only to use string methods
+                loadingScreen();
+                if(userChoice == 'y' || userChoice == 'Y')
+                    return;
+            }
+        }// end of while
+    }   //  end of user Menu
+
+    //  For  waiting time between each action.
+    //  Keep this method at the last of the program. For Easy Modification    
+
+    public static void loadingScreen(String operation) throws InterruptedException
+    {  
+        System.out.print("\nLoading ");
+        
+        char[] spinner = {'|', '/', '-', '\\'};
+        
+        for (int i = 0; i < 5; i++) 
+        {
+            for(char j: spinner)
+            {
+                System.out.printf("\r%s %d",operation,j);
+                Thread.sleep(150);
+            }
+        }
+        System.out.println("\r✅Transaction completed!    ");
     }
 
 }//class
