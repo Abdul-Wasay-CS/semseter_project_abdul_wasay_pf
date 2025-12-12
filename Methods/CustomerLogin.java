@@ -43,7 +43,7 @@ public static void userMenu()
                     loadingScreen();
                 }
             }//end of while
-            swtich(userChoice)
+            switch(userChoice)
             {
                 case 1:
                     loadingScreen();
