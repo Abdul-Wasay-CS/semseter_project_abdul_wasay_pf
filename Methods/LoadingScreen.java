@@ -35,6 +35,31 @@ public class LoadingScreen
         // On logout:
         loadingScreen("Saving session");
     }
+    
+        //  just a simple , default loading screen
+
+    public static void loadingScreen() throws InterruptedException
+    {  
+        System.out.print("\nLoading ");
+        
+        char[] spinner = {'|', '/', '-', '\\'};
+        
+        for (int i = 0; i < 5; i++) 
+        {
+            for(char j: spinner)
+            {
+                System.out.printf("\rPlease Wait %c",j);
+                Thread.sleep(150);
+            }
+        }
+
+        System.out.println("\r✅Transaction completed!    ");
+    }
+
+
+    //  For  waiting time between each action.
+    //  Keep this method at the last of the program. For Easy Modification    
+
     public static void loadingScreen(String operation) throws InterruptedException
     {  
         System.out.print("\nLoading ");
@@ -51,4 +76,6 @@ public class LoadingScreen
         }
         System.out.println("\r✅Transaction completed!    ");
     }
+
+
 }
