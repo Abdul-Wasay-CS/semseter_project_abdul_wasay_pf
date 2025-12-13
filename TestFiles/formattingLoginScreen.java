@@ -28,21 +28,11 @@ public class formattingLoginScreen
 
 
   
- public static void main(String[] args) throws InterruptedException
- {
-  System.out.println("""
-                      =====================Owner Menu============================
-                      |                 What do you want to do?                 |
-                      |                                                         |
-                      |   1) Create an Admin account                            |
-                      |                                                         |
-                      |   2) Delete an Admin account                            |
-                      |                                                         |
-                      |   3)Exit                                                |
-                      ===========================================================
-                      
-                      Enter Your Choice:  """);
-          
-   }//main
+  public static void main(String[] args) throws InterruptedException
+  {
+        System.out.println("What do you want to do?\n1) Create an Admin account\n2) Delete an Admin Account\n3) Exit");
+        int choice = scanner.nextInt();
+
+  }//main
 
 }

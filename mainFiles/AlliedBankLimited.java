@@ -455,7 +455,9 @@ public class AlliedBankLimited
                             |                                                         |
                             |   2) Delete an Admin account                            |
                             |                                                         |
-                            |   3)Exit                                                |
+                            |   3) View Admins                                        |
+                            |                                                         |
+                            |   4)Exit                                                |
                             ===========================================================
                             
                             Enter Your Choice:  """);
@@ -470,6 +472,9 @@ public class AlliedBankLimited
                         deleteAdmin();
                         break;
                     case 3:
+                        viewAdmins();
+                        break;
+                    case 4:
                         return;
                     default:
                         System.out.println("Please select from the given options!");
@@ -626,7 +631,7 @@ public class AlliedBankLimited
                 System.out.print("""
                     Account Id Not found
                     Do you want to go back to main Menu (y = yes , n = no ) :  """);
-                char userChoice = input.next().charAt(0); //  made string only to use string methods
+                char userChoice = scanner.next().charAt(0); 
                 loadingScreen();
                 if(userChoice == 'y' || userChoice == 'Y')
                     return;
