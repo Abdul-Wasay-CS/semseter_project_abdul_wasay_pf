@@ -9,7 +9,7 @@ public class LoadCustomerData {
 
     public static void loadCustomerData()
     {
-        try(File )
+        try(FileInputStream fis = new FileInputStream("CustomernData.txt"))
         {
             while
         }
