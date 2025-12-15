@@ -2,7 +2,8 @@ import java.util.*;
 import java.io.*;
 import static java.lang.System.out;
 
-public class Test {
+public class Test 
+{
   static Scanner scanner = new Scanner(System.in);
   static Random random = new Random();
 
@@ -57,6 +58,8 @@ public class Test {
 
   static final int IDINDEX = 0, PININDEX = 1, BALANCEINDEX = 2, TRANSFERINDEX = 3;
 
+  //  METHODS START FROM HERE 
+
   public static void main(String[] args) throws InterruptedException
   {
     int choice = -1;
@@ -83,7 +86,6 @@ public class Test {
         {
           case 1:
             loadingScreen("Loading Owner Data");
-            loadOwnerData();
             int ownerID, ownerPass;
             while(true)
             {
@@ -94,7 +96,7 @@ public class Test {
                 scanner.nextLine();
                 out.print("Enter your Passkey: ");
                 ownerPass = scanner.nextInt();
-                
+                scanner.nextLine();
                 break;
               }
               catch(InputMismatchException e)
@@ -115,6 +117,7 @@ public class Test {
             loadAdminData();
             out.print("Admin ID: ");
             int adminID = scanner.nextInt();
+            scanner.nextLine();
             adminMenu(adminID);
             break;
           case 3:
@@ -124,12 +127,15 @@ public class Test {
           case 4:
             out.print("Account ID: ");
             int id = scanner.nextInt();
+            scanner.nextLine();
             recoverAccount(id);
             break;
           default:
             out.println("Incorrect Choice!");
         }
-      } catch (Exception e) {
+      } 
+      catch (Exception e) 
+      {
         out.println(e.toString());
       }
     } while (choice != 5);
@@ -143,41 +149,60 @@ public class Test {
         ====================================================""");
   }
 
-  public static void ownerMenu() {
-    int choice = -1;
-    do {
-      try {
-        out.println("""
-            ==========================Owner Menu=======================
-            |                 What do you want to do?                 |
-            |                                                         |
-            |   1) Create an Admin account                            |
-            |                                                         |
-            |   2) Delete an Admin account                            |
-            |                                                         |
-            |   3) Exit                                               |
-            ===========================================================
-
-            Enter Your Choice:  """);
-        choice = scanner.nextInt();
+  public static void ownerMenu() throws InterruptedException
+  {
+    while(true)
+    {
+      try
+      {
+        System.out.println("""
+                    =====================Owner Menu============================
+                    |                 What do you want to do?                 |
+                    |                                                         |
+                    |   1) Create an Admin account                            |
+                    |                                                         |
+                    |   2) Delete an Admin account                            |
+                    |                                                         |
+                    |   3) View Admins                                        |
+                    |                                                         |
+                    |   4)Exit                                                |
+                    ===========================================================
+                    
+                    Enter Your Choice:  """);
+        
+        int choice = scanner.nextInt();
         scanner.nextLine();
-        switch (choice) {
-          case 1:
-            createAdmin();
-            break;
-          case 2:
-            deleteAdmin();
-            break;
-          default:
-            out.println("Incorrect Option.");
+        switch (choice) 
+        {
+            case 1:
+                createAdmin();
+                break;
+            case 2:
+                deleteAdmin();
+                break;
+            case 3:
+                viewAdmins();
+                break;
+            case 4:
+                return;
+            default:
+                System.out.println("Please select from the given options!");
         }
-      } catch (Exception e) {
-        out.println(e.toString());
-      }
-    } while (choice != 3);
-  }
 
-  public static void createAdmin() {
+        break;  //  Only executes if no exception raised so far  
+      }
+      catch(InputMismatchException e)
+      {
+        System.out.println("Please Enter An Integer Only! ");
+        scanner.nextLine();
+      }
+      
+    }
+   
+  }// OwnerMenu
+
+  public static void createAdmin() throws InterruptedException
+  {
     int adminIndex = -1;
     do {
       out.print("Enter Admin Name: ");
@@ -221,7 +246,8 @@ public class Test {
     } while (!adminExists[adminIndex]);
   }
 
-  public static int adminIDToBeAssigned() {
+  public static int adminIDToBeAssigned() throws InterruptedException
+  {
     int idToAssign = 0;
     for (int i = 0; i < 5; i++) {
       if (adminExists[i] == false) {
@@ -232,12 +258,14 @@ public class Test {
     return idToAssign;
   }
 
-  public static void deleteAdmin() {
+  public static void deleteAdmin() throws InterruptedException
+  {
     int indexToDelete = -1;
     do {
       try {
         out.print("Admin ID to be Deleted: ");
         int idToDelete = scanner.nextInt();
+        scanner.nextLine();
         indexToDelete = idToDelete - 505;
 
         adminCredentials[indexToDelete][0] = 0;
@@ -252,7 +280,8 @@ public class Test {
     } while (adminExists[indexToDelete]);
   }
 
-  public static void adminMenu(int adminID) {
+  public static void adminMenu(int adminID) throws InterruptedException
+  {
     int adminIndex = adminID - 505;
     if (adminExists[adminIndex] == false) {
       System.out.println("Wrong Admin Credentials.");
@@ -278,11 +307,13 @@ public class Test {
           case 3:
             System.out.print("Enter index of the account: ");
             index = scanner.nextInt();
+            scanner.nextLine();
             deleteAccount(index);
             break;
           case 4:
             System.out.print("Enter index of the account: ");
             index = scanner.nextInt();
+            scanner.nextLine();
             blockAccount(index);
             break;
           default:
@@ -294,7 +325,8 @@ public class Test {
     } while (option != 5);
   }
 
-  public static void viewLogs() {
+  public static void viewLogs() throws InterruptedException
+  {
     for (int i = logs.size() - 1; i >= 0; i--) {
       try {
         out.println(i + ". " + logs.get(i));
@@ -304,7 +336,8 @@ public class Test {
     }
   }
 
-  public static void createAccount() {
+  public static void createAccount() throws InterruptedException
+  {
     int indexNumber = accountIDToBeAssigned() - 101;
     scanner.nextLine();
 
@@ -367,7 +400,8 @@ public class Test {
     viewAccountDetails(indexNumber);
   }
 
-  public static void deleteAccount(int index) {
+  public static void deleteAccount(int index) throws InterruptedException
+  {
     do {
       try {
         accountNames.set(index, "");
@@ -387,7 +421,8 @@ public class Test {
     } while (accountExists.get(index) != false);
   }
 
-  public static int accountIDToBeAssigned() {
+  public static int accountIDToBeAssigned() throws InterruptedException
+  {
     int idToBeAssigned = 0;
     Boolean idFound = false;
     for (int i = 0; i < accountExists.size(); i++) {
@@ -405,7 +440,28 @@ public class Test {
     return idToBeAssigned;
   }
 
-  public static boolean checkingDigit(String userPINsString) {
+  public static void viewAdmins() throws InterruptedException
+    {
+                System.out.printf("""
+                ┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+                ┃%15s  ┃%15s  ┃%15s  ┃%15s    ┃      
+                """, "Admin Name","Admin Exists","Admin ID","Admin Pin ");
+        for(int i =0; i<adminName.length; i++)
+        {
+
+            if(adminExists[i])
+            { 
+                System.out.printf("""
+                    ┣━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━┫
+                    ┃%15s  ┃%15s  ┃%15s  ┃%15s    ┃      
+                    """, adminName[i],adminExists[i],adminCredentials[i][0],adminCredentials[i][1]);
+            }
+        }
+        System.out.println("┗━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━┛");
+    }    
+
+  public static boolean checkingDigit(String userPINsString) throws InterruptedException
+  {
     for (int i = 0; i < userPINsString.length(); i++) {
       char currentChar = userPINsString.charAt(i);
 
@@ -416,7 +472,8 @@ public class Test {
     return true;
   }
 
-  public static boolean isDigits(String userPin) {
+  public static boolean isDigits(String userPin) throws InterruptedException
+  {
     char currentChar;
     boolean isDigit = true;
     for (int i = 0; i < userPin.length(); i++) {
@@ -428,19 +485,22 @@ public class Test {
     return isDigit;
   }
 
-  public static void customerMenu() {
+  public static void customerMenu() throws InterruptedException
+  {
     boolean repeat = true;
     int option = -1;
     if (repeat == false)
       return;
-    do {
+    do 
+    {
 
       out.println("Enter your Login id: ");
       int userID = scanner.nextInt();
       scanner.nextLine();
-      if (userID > accountExists.size() || userID < 101) {
+      if (userID > accountExists.size() || userID < 101) 
+      {
         out.println("Invalid ID!");
-        out.print("Do you wanna exit?(yes or no) ");
+        out.print("Do you want to exit?(yes/no): ");
         String exit = scanner.nextLine();
         if (exit.equalsIgnoreCase("yes"))
           repeat = false;
@@ -448,11 +508,14 @@ public class Test {
         continue;
       }
 
-      if (accountExists.get(userID - 101) && !blocked.get(userID - 101)) {
+      if (accountExists.get(userID - 101) && !blocked.get(userID - 101)) 
+      {
         out.println("Login Succesfull!");
-        while (true) {
-          try {
-            loadingScreen();
+        while (true) 
+        {
+          try
+          {
+            loadingScreen("Preparing User Menu");
             out.printf("""
                 =============================User Menu===============================
                 |                                                                   |
@@ -467,6 +530,7 @@ public class Test {
                 Enter Your Choice:  """);
 
             option = scanner.nextInt();
+            scanner.nextLine();
             break;
           } catch (InputMismatchException e1) {
             out.println("Please Enter an Integer Only. ");
@@ -494,7 +558,7 @@ public class Test {
           default:
             System.out.println("Invalid Choice!");
             loadingScreen();
-        }
+      }
       } else {
         out.print("""
             Account Id Not found
@@ -507,7 +571,8 @@ public class Test {
     } while (option != 5);
   }
 
-  public static void depositMoney(int indexNumber) {
+  public static void depositMoney(int indexNumber) throws InterruptedException
+  {
     while (true) {
       try {
         out.print("DEPOSIT:\nHow much money do you want to deposit: ");
@@ -532,7 +597,9 @@ public class Test {
     }
   }
 
-  public static void withdrawMoney(int indexNumber) {
+
+  public static void withdrawMoney(int indexNumber) throws InterruptedException
+  {
     while (true) {
       System.out.print("WITHDRAW:\nHow much money do you want to withdraw: ");
       int moneyToWithdraw = scanner.nextInt();
@@ -558,11 +625,13 @@ public class Test {
     }
   }
 
-  public static void checkBalance(int indexNumber) {
+  public static void checkBalance(int indexNumber) throws InterruptedException
+  {
     System.out.println("Balance:" + accountCredentials.get(indexNumber).get(BALANCEINDEX));
   }
 
-  public static void transferMoney(int indexNumber) {
+  public static void transferMoney(int indexNumber) throws InterruptedException
+  {
 
     System.out.print("Enter the Reciever's Transfer ID: ");
     int transferID = scanner.nextInt();
@@ -586,7 +655,8 @@ public class Test {
     }
   }
 
-  public static int findReceiverIDIndex(int transferID) {
+  public static int findReceiverIDIndex(int transferID) throws InterruptedException
+  {
     int receiverIndex = -1;
     boolean transferIDFound = false;
 
@@ -605,7 +675,8 @@ public class Test {
     return receiverIndex;
   }
 
-  public static void viewAccountDetails(int indexNumber) {
+  public static void viewAccountDetails(int indexNumber) throws InterruptedException
+  {
     System.out.println(
         "\nACCOUNT DETAILS:\nAccount ID: "
             + accountCredentials.get(indexNumber).get(IDINDEX)
@@ -617,11 +688,13 @@ public class Test {
             + accountCredentials.get(indexNumber).get(TRANSFERINDEX));
   }
 
-  public static void blockAccount(int index) {
+  public static void blockAccount(int index) throws InterruptedException
+  {
     blocked.set(index, true);
   }
 
-  public static void recoverAccount(int accountID) {
+  public static void recoverAccount(int accountID) throws InterruptedException
+  {
     int indexNumber = accountID - 101;
     while (true) {
       try {
@@ -675,7 +748,7 @@ public class Test {
       }
     }
 
-    System.out.println("\r✅Transaction completed!    ");
+    System.out.println("\rLoading completed!    ");
   }
 
   public static void loadingScreen(String operation) throws InterruptedException 
@@ -690,13 +763,13 @@ public class Test {
         Thread.sleep(150);
       }
     }
-    System.out.println("\r✅Transaction completed!    ");
+    System.out.println("\rcompleted!    ");
   }
 
   //  file handling methods
   //  Admin data saving  and loading methods
 
-   public static void saveAdminData() throws InterruptedException
+  public static void saveAdminData() throws InterruptedException
   {
     while(true)
     {
@@ -732,9 +805,8 @@ public class Test {
     }
   }
 
-  // load Admin data from the file.
 
-  public static void loadAdminData()
+  public static void loadAdminData() throws InterruptedException
   {
       try(FileInputStream fis = new FileInputStream("AdminData.txt"); Scanner reader = new Scanner(fis))
       {
@@ -744,9 +816,9 @@ public class Test {
               String line = reader.nextLine();
               String[] allAdminData = line.split(",");
               
-              adminCredentials[i][0] = Integer.parseInteger(allAdminData[0]);
+              adminCredentials[i][0] = Integer.parseInt(allAdminData[0]);
               adminCredentials[i][1] = Integer.parseInt(allAdminData[1]);
-              adminName[i] = Integer.(allAdminData[2]);
+              adminName[i] = allAdminData[2];
               adminExists[i] = Boolean.parseBoolean(allAdminData[3]);
               i++;
           }
@@ -769,7 +841,7 @@ public class Test {
   }// end of loadAdminData()
 
   
-  public static void saveCustomerData()
+  public static void saveCustomerData() throws InterruptedException
   {
       try(FileOutputStream fos = new FileOutputStream("CustomerData.txt"); PrintWriter writer = new PrintWriter(fos))
       {
@@ -822,5 +894,50 @@ public class Test {
       }
   }
 
+  public static void loadCustomerData() throws InterruptedException
+  {
+      //  File data format:
+      //  Id,Pin,Balance,TransferIndex,SecurityQuesiton,Name,accountExists,Blocked
   
+      //  Each value is seperated by a comma, each line = one user record
+      
+      try(FileInputStream fis = new FileInputStream("CustomerData.txt"); Scanner reader = new Scanner(fis))
+      {
+          // clear out any previous garbage data.
+          accountCredentials.clear();
+          accountNames.clear();
+          accountExists.clear();
+          securityQuestion.clear();
+          blocked.clear();
+
+          int i =0;
+          while(reader.hasNextLine())
+          {
+              String line = reader.nextLine();
+              String[] customerData = line.split(",");
+              if(!line.isEmpty())
+              {
+                  accountCredentials.add(new ArrayList<>());
+                  accountCredentials.get(i).add(Integer.parseInt(customerData[0]));   //  gets ID
+                  accountCredentials.get(i).add(Integer.parseInt(customerData[1]));   //  gets pin
+                  accountCredentials.get(i).add(Integer.parseInt(customerData[2]));   //  gets Balance
+                  accountCredentials.get(i).add(Integer.parseInt(customerData[3]));   //  gets TransferIndex
+                  securityQuestion.add(customerData[4]);
+                  accountNames.add(customerData[5]);
+                  accountExists.add(Boolean.parseBoolean(customerData[6]));
+                  blocked.add(Boolean.parseBoolean(customerData[7]));
+                  i++;
+              }
+          }
+      }
+      catch(IOException e)
+      {
+          System.out.println("Something went wrong with the files!"+e.toString());
+      }
+      catch(Exception e)
+      {
+          System.out.println("An unexpected error occured.");
+      }
+  }// loadCustomerData
+
 }//class
