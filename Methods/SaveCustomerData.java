@@ -69,7 +69,7 @@ public class SaveCustomerData {
             //  File data format:
             
             //  Id,Pin,Balance,TransferIndex,SecurityQuesiton,Name,accountExists,Blocked
-            
+        
             //  Each value is seperated by a comma, each line = one user record
             for(int i =0; i<accountCredentials.size(); i++)
             {

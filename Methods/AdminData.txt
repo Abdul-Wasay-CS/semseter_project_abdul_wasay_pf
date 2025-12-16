@@ -1,5 +1,0 @@
-1001,1234,Alice Manager,true
-1002,5678,Bob Supervisor,true
-1003,9012,Charlie Auditor,true
-1004,3456,Diana Teller,false
-1005,7890,Eve Security,true

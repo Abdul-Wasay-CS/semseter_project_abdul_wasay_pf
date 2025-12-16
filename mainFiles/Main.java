@@ -56,6 +56,8 @@ public class Main {
   // ================== MAIN ==================
   public static void main(String[] args) throws InterruptedException {
     loadLogs();
+    loadAdminData();
+    loadCustomerData();
     int choice = -1;
     do {
       try {
@@ -102,16 +104,20 @@ public class Main {
             }
           }
           case 2 -> {
+            loadingScreen("Loading Admins Data");
             loadAdminData();
             out.print("Admin ID: ");
             int adminID = scanner.nextInt();
             out.print("Passkey: ");
             int adminPass = scanner.nextInt();
             scanner.nextLine();
+            loadingScreen("Arranging the Admin Menu");
             adminMenu(adminID, adminPass);
           }
           case 3 -> {
+            loadingScreen("Loading Customer Data");
             loadCustomerData();
+            loadingScreen("Getting User menu ready");
             customerMenu();
           }
           case 4 -> {
@@ -284,7 +290,7 @@ public class Main {
       try {
         System.out.println("===========Admin Menu===========");
         System.out.println(
-            "What do you want to do?\n1) View the logs\n2) Create an account\n3) Delete an account\n4) Block an account\n5) Exit");
+            "What do you want to do?\n1) View the logs\n2) Create an account\n3) Delete an account\n4) Block an account\n5) View Cutomer Accounts\n6) Exit");
         option = scanner.nextInt();
         scanner.nextLine();
         int index;
@@ -310,6 +316,10 @@ public class Main {
             blockAccount(index);
             break;
           case 5:
+            loadingScreen("Alligning All the customers data");
+            viewUsers();
+            break;  
+          case 6:
             /* exit */
             break;
           default:
@@ -319,7 +329,7 @@ public class Main {
         out.println(e.toString());
         scanner.nextLine();
       }
-    } while (option != 5);
+    } while (option != 6);
   }
 
   public static void viewLogs() {
@@ -886,5 +896,22 @@ public class Main {
     } catch (IOException e) {
       out.println("Something went wrong with the files!" + e.toString());
     }
+  }
+
+  public static void viewUsers()
+  {
+      System.out.printf("""
+      ┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+      ┃      Name       ┃         ID      ┃      Pin        ┃     Balance     ┃   Tranfer ID    ┃      Blocked    ┃     Exists      ┃                   
+      """);
+  for (int i = 0; i <accountCredentials.size(); i++) {
+      // 7 coulumns
+
+      System.out.printf("""
+          ┣━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━┫━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━┫
+          ┃%-17s┃%-17d┃%-17d┃%-17d┃%-17d┃%-17b┃%-17b┃
+          """, accountNames.get(i), accountCredentials.get(i).get(IDINDEX),accountCredentials.get(i).get(PININDEX), accountCredentials.get(i).get(BALANCEINDEX),accountCredentials.get(i).get(TRANSFERINDEX),blocked.get(i),accountExists.get(i));
+  }
+  System.out.println("┗━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┛");
   }
 }
