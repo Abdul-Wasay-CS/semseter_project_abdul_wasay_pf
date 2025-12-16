@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 import static java.lang.System.out;
 
-public class Main {
+public class Test {
 
   static Scanner scanner = new Scanner(System.in);
   static Random random = new Random();
@@ -191,13 +191,13 @@ public class Main {
   }
 
   public static void createAdmin() throws InterruptedException {
-    int   adminIndex;
+    int adminIndex;
     while (true) {
       out.print("Enter Admin Name: ");
       String name = scanner.nextLine();
-      Stri  ng PINs;
+      String PINs;
       String PINsConfirm;
-      i  nt f i nalPIN = 0;
+      int finalPIN = 0;
       boolean matchingPINs = false;
       do {
         try {
@@ -235,7 +235,11 @@ public class Main {
       } catch (Exception e) {
         out.println(e.toString());
         break;
-      }   int adminIDToBeAssigned() {
+      }
+    }
+  }
+
+  public static int adminIDToBeAssigned() {
     int idToAssign = -1;
     for (int i = 0; i < 5; i++) {
       if (!adminExists[i]) {
@@ -271,9 +275,9 @@ public class Main {
     }
   }
 
-  // ================== ADMIN MENU ================== 
+  // ================== ADMIN MENU ==================
   public static void adminMenu(int adminID, int adminPass) throws InterruptedException {
-    int adminIndex = adminID - 505; 
+    int adminIndex = adminID - 505;
     if (adminIndex < 0 || adminIndex >= adminExists.length ||
         !adminExists[adminIndex] ||
         adminPass != adminCredentials[adminIndex][PININDEX]) {
@@ -286,7 +290,7 @@ public class Main {
       try {
         System.out.println("===========Admin Menu===========");
         System.out.println(
-            "What do you want to do?\n1) View the logs\n2) Create an account\n3) Delete an account\n4) Block an account\n5) View Customer Accounts\n6)Deposit Amount\n7) Exit");
+            "What do you want to do?\n1) View the logs\n2) Create an account\n3) Delete an account\n4) Block an account\n5) View Customer Accounts\n6) Deposit Amount\n7) Exit");
         option = scanner.nextInt();
         scanner.nextLine();
         int index;
@@ -300,15 +304,13 @@ public class Main {
           case 3:
             System.out.print("Enter index of the account: ");
             index = scanner.nextInt();
-            scanner
-                .nextLine();
+            scanner.nextLine();
             deleteAccount(index);
             break;
           case 4:
             System.out.print("Enter index of the account: ");
             index = scanner.nextInt();
-            scanner
-                .nextLine();
+            scanner.nextLine();
             blockAccount(index);
             break;
           case 5:
@@ -317,30 +319,34 @@ public class Main {
             break;
           case 6:
             loadingScreen("Fetching Balance");
-            out.print("Enter the index number of the account you want to make a deposit to: ");
+            out.print("Enter index of the account:");
             int indexNumber = scanner.nextInt();
             depositMoney(indexNumber);
           case 7:
             /* exit */
             break;
           default:
-            Syste m.out.println("Please try again with a valid option!");
+            System.out.println("Please try again with a valid option!");
         }
-      } catch (Ex ception e) {
+      } catch (Exception e) {
         out.println(e.toString());
         scanner.nextLine();
-      } 
-    } while (option != 7);
-  } gs()  { 
-    for (int i = logs.size() - 1; i >= 0; i--) {
-      try { intln (i + ". " + logs.get(i)); (Exception e) {
-        out.println(e.toString());
       }
-            
+    } while (option != 7);
   }
 
-  // ============
-            c void createAccount() {
+  public static void viewLogs() {
+    for (int i = logs.size() - 1; i >= 0; i--) {
+      try {
+        out.println(i + ". " + logs.get(i));
+      } catch (Exception e) {
+        out.println(e.toString());
+      }
+    }
+  }
+
+  // ================== CUSTOMER CREATION ==================
+  public static void createAccount() {
     int indexNumber = accountIDToBeAssigned() - 101;
 
     while (indexNumber >= accountNames.size())
@@ -575,8 +581,12 @@ public class Main {
 
   public static void depositMoney(int indexNumber) {
     while (true) {
-      if (accountExists[indexNumber]){
-          out.println("Account Not Found!");
+      if(indexNumber >= accountExists.size()) {
+        out.println("Invalid Index Number!");
+        return;
+      }
+        if (!accountExists.get(indexNumber)) {
+          out.println("Account Doesn't Exist!");
           return;
         }
 
@@ -601,16 +611,20 @@ public class Main {
 
   public static void withdrawMoney(int indexNumber) {
     while (true) {
-       System.out.print("WITHDRAW:\nHow much money do you want to withdraw: ");
-       int moneyToWithdraw = scanner.nextInt();   scanner.nextLine();
+      System.out.print("WITHDRAW:\nHow much money do you want to withdraw: ");
+      int moneyToWithdraw = scanner.nextInt();
+      scanner.nextLine();
       if (moneyToWithdraw <= 0) {
         System.out.print("Withdraw amount can't be zero or negative.");
-         return;
-        }   ArrayList<Integer> creds = accountCredentials.get(i   if (moneyToWithdraw > creds.get(BALANCEINDEX)) {
+        return;
+      }
+      ArrayList<Integer> creds = accountCredentials.get(indexNumber);
+      if (moneyToWithdraw > creds.get(BALANCEINDEX)) {
         System.out.print("Insufficient Balance.");
         return;
       }
-       System.out.println();   creds.set(BALANCEINDEX, creds.get(BALANCEINDEX) - moneyToWithdraw);
+      System.out.println();
+      creds.set(BALANCEINDEX, creds.get(BALANCEINDEX) - moneyToWithdraw);
       logs.add("A withdrawal of " + moneyToWithdraw + "$ made by Account ID-" + creds.get(IDINDEX));
       break;
     }
@@ -621,13 +635,11 @@ public class Main {
   }
 
   public static void transferMoney(int indexNumber) {
-            
     System.out.print("Enter the Reciever's Transfer ID: ");
     int transferID = scanner.nextInt();
     scanner.nextLine();
     int receiverIndex = findReceiverIDIndex(transferID);
     System.out.print("How much money do you want to transfer? ");
-            
     int moneyToTransfer = scanner.nextInt();
     scanner.nextLine();
 
@@ -651,12 +663,10 @@ public class Main {
     for (int i = 0; i < accountCredentials.size(); i++) {
       ArrayList<Integer> creds = accountCredentials.get(i);
       if (creds.size() > TRANSFERINDEX && creds.get(TRANSFERINDEX) == transferID) {
-          
         receiverIndex = i;
         transferIDFound = true;
         break;
       }
-          
     }
     if (!transferIDFound) {
       System.out.println("No such account found! Please enter a valid Transfer ID.");
@@ -683,11 +693,9 @@ public class Main {
       System.out.println(RED + "Account doesn't exist!" + RESET);
       return;
     }
-          
 
     System.out.println("RECOVER ACCOUNT:");
     System.out.print("Enter your account ID: ");
-          
     int idToRecover = scanner.nextInt();
     scanner.nextLine();
     int indexToRecover = idToRecover - 101;
@@ -742,17 +750,17 @@ public class Main {
     while (true) {
       try (FileOutputStream fos = new FileOutputStream("AdminData.txt")) {
         PrintWriter writer = new PrintWriter(fos);
-        for (int i = 0; i < 5; i++)     writer.printf("%d,%d,%s,%b%n", adminCredentials[i][0], adminCredentials[i][1], adminName[i], adminExists[i]);
+        for (int i = 0; i < 5; i++)
+          writer.printf("%d,%d,%s,%b%n", adminCredentials[i][0], adminCredentials[i][1], adminName[i], adminExists[i]);
         writer.close();
         return;
-      } catch (FileNotFoundException e1) {   System.out.println("File was not found, creating file.");
+      } catch (FileNotFoundException e1) {
+        System.out.println("File was not found, creating file.");
         File file = new File("AdminData.txt");
         try {
-            
           if (file.createNewFile())
             System.out.println("File Succesfully Created. ");
           else
-            
             System.out.println("File could not be created");
         } catch (IOException e) {
           System.out.println("Something went Wrong. ");
@@ -781,25 +789,27 @@ public class Main {
       }
     } catch (ArrayIndexOutOfBoundsException e1) {
       System.out.println("There are more than five admin data in the file, pls delete old admin data.");
-   
+    } catch (IOException e2) {
+      System.out.println("Something went wrong with the files..");
+    } catch (Exception e3) {
+      System.out.println("An unexpected error has occured");
+    }
+  }
 
-  } catch (Exception e3) {  
-   
+  public static void saveCustomerData() {
+    try (FileOutputStream fos = new FileOutputStream("CustomerData.txt");
+        PrintWriter writer = new PrintWriter(fos)) {
 
-    
-    eOutputStream fos = n putStre
-
-    
-    nt i = 0; i < accountCred s.siz 
-    
-    e (creds.size() < 4)      
-    
-    er.printf("%d,%d,%d, 
-
-        creds.get(PININDEX),       
-
-        creds.get(TRANSFERIN
-          securityQuestion.get(i),
+      for (int i = 0; i < accountCredentials.size(); i++) {
+        ArrayList<Integer> creds = accountCredentials.get(i);
+        while (creds.size() < 4)
+          creds.add(0);
+        writer.printf("%d,%d,%d,%d,%s,%s,%b,%b%n",
+            creds.get(IDINDEX),
+            creds.get(PININDEX),
+            creds.get(BALANCEINDEX),
+            creds.get(TRANSFERINDEX),
+            securityQuestion.get(i),
             accountNames.get(i),
             accountExists.get(i),
             blocked.get(i));
@@ -920,11 +930,3 @@ public class Main {
         "┗━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━┛");
   }
 }
-
-
-  
- 
-
-
-  
- 
