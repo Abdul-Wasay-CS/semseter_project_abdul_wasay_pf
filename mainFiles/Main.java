@@ -116,7 +116,6 @@ public class Main {
           }
           case 3 -> {
             loadingScreen("Loading Customer Data");
-            loadCustomerData();
             loadingScreen("Getting User menu ready");
             customerMenu();
           }
@@ -325,6 +324,7 @@ public class Main {
           case 6:    
             loadingScreen("Fetching Balance");
             depositMoney();
+            saveCustomerData();
             break;
           case 7:
             /* exit */
