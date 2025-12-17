@@ -290,7 +290,7 @@ public class Main {
       try {
         System.out.println("===========Admin Menu===========");
         System.out.println(
-            "What do you want to do?\n1) View the logs\n2) Create an account\n3) Delete an account\n4) Block an account\n5) View Cutomer Accounts\n6) Exit");
+            "What do you want to do?\n1) View the logs\n2) Create an account\n3) Delete an account\n4) Block an account\n5) View Cutomer Accounts\n6)Deposit Amount\n7) Exit");
         option = scanner.nextInt();
         scanner.nextLine();
         int index;
@@ -300,6 +300,7 @@ public class Main {
             break;
           case 2:
             createAccount();
+            saveCustomerData();
             break;
           case 3:
             System.out.print("Enter index of the account: ");
@@ -307,6 +308,7 @@ public class Main {
             scanner
                 .nextLine();
             deleteAccount(index);
+            saveCustomerData();
             break;
           case 4:
             System.out.print("Enter index of the account: ");
@@ -314,12 +316,17 @@ public class Main {
             scanner
                 .nextLine();
             blockAccount(index);
+            saveCustomerData();
             break;
           case 5:
             loadingScreen("Alligning All the customers data");
             viewUsers();
-            break;  
-          case 6:
+            break;
+          case 6:    
+            loadingScreen("Fetching Balance");
+            depositMoney();
+            break;
+          case 7:
             /* exit */
             break;
           default:
@@ -329,7 +336,7 @@ public class Main {
         out.println(e.toString());
         scanner.nextLine();
       }
-    } while (option != 6);
+    } while (option != 7);
   }
 
   public static void viewLogs() {
@@ -388,7 +395,9 @@ public class Main {
     out.println("Answer the following security question for future account recovery:\nWhat's your favourite car name?");
     securityQuestion.set(indexNumber, scanner.nextLine());
 
-    // Ensure 4 elements in this account's list
+    //  Ensure 4 elements in this account's list
+    //  New Arraylist refernences to the arraylist Presesent in accountCredentials at indexNumber
+    
     ArrayList<Integer> creds = accountCredentials.get(indexNumber);
     while (creds.size() < 4)
       creds.add(0);
@@ -495,11 +504,25 @@ public class Main {
     int option;
 
     while (repeat) {
-      out.println("Enter your Login id: ");
-      int userID = scanner.nextInt();
-      scanner.nextLine();
-
-      if (userID < 101 || userID - 101 >= accountExists.size()) {
+      int userID;
+      while(true)
+      {
+        try
+        {
+          out.println("Enter your Login id: ");
+          userID = scanner.nextInt();
+          scanner.nextLine();
+          break;
+        }
+        catch(InputMismatchException e1)
+        {
+          System.out.println("Please enter only an intger.");
+          scanner.nextLine();
+        }
+      }// end of input validation loop.
+      
+      if (userID < 101 || userID - 101 >= accountExists.size()) 
+      {
         out.println("Invalid ID!");
         out.print("Do you wanna exit?(yes or no) ");
         String exit = scanner.nextLine();
@@ -507,11 +530,41 @@ public class Main {
           repeat = false;
         continue;
       }
-
+      int tries = 3;
       int idx = userID - 101;
+      int passkeys = 0;
+      while(true)
+      {
+        try
+        {
+          out.print("Enter the Passkey: ");
+          passkeys = scanner.nextInt();
+          if(passkeys == accountCredentials.get(idx).get(PININDEX))
+          {  
+            System.out.println("Successfully Logged in");
+            break;
+          }
+          else if(tries <= 0)
+          {
+            System.out.println("NO more tries, account blocked");
+            blocked.set(idx, true);
+            break;
+          }
+          else
+          {
+            System.out.printf("Incorrect Pin,%d tries remaining",tries);
+            tries--;
+          }
+        }
+        catch(InputMismatchException e)
+        {
+          System.out.println("Please Enter only an integer");
+          scanner.nextLine();
+        }
+      }
       if (accountExists.get(idx) && !blocked.get(idx)) {
         out.println("Login Succesfull!");
-
+      
         do {
           try {
             loadingScreen();
@@ -531,24 +584,29 @@ public class Main {
               case 1:
                 loadingScreen();
                 viewAccountDetails(idx);
+                saveCustomerData();
                 break;
 
               case 2:
                 loadingScreen();
                 withdrawMoney(idx);
+                saveCustomerData();
                 break;
 
               case 3:
                 loadingScreen();
                 transferMoney(idx);
+                saveCustomerData();
 
               case 4:
                 loadingScreen();
                 checkBalance(idx);
+                saveCustomerData();
                 break;
 
               case 5:
-                break;
+                saveCustomerData();
+                return;
               // logout
 
               default:
@@ -576,9 +634,23 @@ public class Main {
     }
   }
 
-  public static void depositMoney(int indexNumber) {
+  public static void depositMoney() throws InterruptedException 
+  {
     while (true) {
       try {
+
+        System.out.println("Please Enter the ID of the Deposit account: ");
+        int idNumber  = scanner.nextInt();
+        int indexNumber = idNumber - 101; 
+        
+        if(indexNumber < 0 || indexNumber > accountCredentials.size())
+        {
+          System.out.println("Invalid Id number, Please enter a correct id number");
+          loadingScreen();
+          continue;
+        }
+
+
         out.print("DEPOSIT:\nHow much money do you want to deposit: ");
         int moneyToDeposit = scanner.nextInt();
         scanner.nextLine();
@@ -586,13 +658,19 @@ public class Main {
           out.print("Deposit amount must be positive.");
           return;
         }
-        ArrayList<Integer> creds = accountCredentials.get(indexNumber);
-        creds.set(BALANCEINDEX, creds.get(BALANCEINDEX) + moneyToDeposit);
-        logs.add("A deposit of " + moneyToDeposit + "$ made by Account ID-" + creds.get(IDINDEX));
+        accountCredentials.get(indexNumber).set(BALANCEINDEX,accountCredentials.get(indexNumber).get(BALANCEINDEX)+moneyToDeposit);
+        logs.add("A deposit of " + moneyToDeposit + "$ made by Account ID-" + accountCredentials.get(indexNumber).get(IDINDEX));
         break;
-      } catch (Exception e) {
-        out.println(e.toString());
+      } 
+      catch (InputMismatchException e) 
+      {
+        System.out.println("Please only enter integer.");
         scanner.nextLine();
+        loadingScreen("Going back to the start");
+      }
+      catch (Exception e)
+      {
+        System.out.println("Something went wrong.");
       }
     }
   }

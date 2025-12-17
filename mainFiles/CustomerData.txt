@@ -1,3 +1,10 @@
-1001,1234,5000,0,What is your pet's name?,Alice Johnson``,true,false
-1002,5678,10000,500,What city were you born in?,Bob Smith``,true,false
-1003,9999,2500,0,What is your mother's maiden name?,Charlie Brown``,true,true
+101,1234,6000,5423,Toyota,John Doe,true,false
+102,5678,11000,7890,Smith,Jane Smith,true,false
+103,9999,0,1000,New York,Bob Johnson,true,true
+104,0,75000,9999,Blue,Alice Brown,true,false
+105,4321,250000,4567,Honda Civic,Charlie Wilson,true,false
+106,8888,500,2345,Titanic,David Lee,true,false
+107,1111,15000,8888,Pizza,Emma Davis,true,false
+108,2222,32000,6543,Buddy,Frank Miller,true,false
+109,3333,0,7777,Doctor,Grace Taylor,true,true
+110,4444,98000,3333,Harry Potter,Henry Clark,true,false
