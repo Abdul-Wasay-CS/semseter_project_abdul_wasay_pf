@@ -319,9 +319,9 @@ public class Test {
             break;
           case 6:
             loadingScreen("Fetching Balance");
-            out.print("Enter index of the account:");
-            int indexNumber = scanner.nextInt();
-            depositMoney(indexNumber);
+            out.print("Enter ID of the account:");
+            int id = scanner.nextInt();
+            depositMoney(id);
           case 7:
             /* exit */
             break;
@@ -579,7 +579,8 @@ public class Test {
     }
   }
 
-  public static void depositMoney(int indexNumber) {
+  public static void depositMoney(int id) {
+    int indexNumber = id - 101;
     while (true) {
       if(indexNumber >= accountExists.size()) {
         out.println("Invalid Index Number!");
