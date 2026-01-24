@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 import static java.lang.System.out;
 
-public class Test {
+public class Main {
 
   static Scanner scanner = new Scanner(System.in);
   static Random random = new Random();
